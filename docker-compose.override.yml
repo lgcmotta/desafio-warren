@@ -4,8 +4,8 @@ services:
   desafiowarren.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=desafiowaren
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=desafiowarren
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/desafiowarren.pfx
       - ASPNETCORE_URLS=https://+:443;http://+:80
     ports:
       - "5000:80"
