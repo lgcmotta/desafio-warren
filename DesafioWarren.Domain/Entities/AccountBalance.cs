@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using DesafioWarren.Domain.Aggregates;
 using DesafioWarren.Domain.ValueObjects;
 
 namespace DesafioWarren.Domain.Entities
 {
-    internal sealed class AccountBalance : Entity
+    public sealed class AccountBalance : Entity
     {
         private decimal _balance;
 
         private ICollection<AccountTransaction> _transactions = new List<AccountTransaction>();
 
         public IEnumerable<AccountTransaction> Transactions => _transactions;
+
+        public decimal Balance => _balance;
 
         public AccountBalance()
         {
@@ -91,6 +94,6 @@ namespace DesafioWarren.Domain.Entities
             }
         }
 
-        public decimal GetBalance() => _balance;
+        
     }
 }

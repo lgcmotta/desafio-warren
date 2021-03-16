@@ -16,11 +16,11 @@ namespace DesafioWarren.Domain.Aggregates
         
         public string Cpf { get; }
         
-        public string GetName() => _name;
+        public string Name => _name;
 
-        public string GetEmail() => _email;
+        public string Email => _email;
 
-        public string GetPhoneNumber() => _phoneNumber;
+        public string PhoneNumber => _phoneNumber;
 
         public void ChangeEmail(string email) => _email = email;
 
@@ -46,7 +46,7 @@ namespace DesafioWarren.Domain.Aggregates
 
         public decimal Withdraw(decimal value) => _accountBalance.Withdraw(value);
 
-        public decimal GetBalance() => _accountBalance.GetBalance();
+        public decimal GetBalance() => _accountBalance.Balance;
 
         public IEnumerable<AccountTransaction> GetAccountTransactions() => _accountBalance.Transactions;
 

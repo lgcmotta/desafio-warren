@@ -18,7 +18,7 @@ namespace DesafioWarren.UnitTests.Domain
         {
             var account = new Account("Foo", "foo@gmail.com", "+5551999999999", "123.456.789.10");
 
-            Assert.Equal("Foo", account.GetName());
+            Assert.Equal("Foo", account.Name);
         }
 
         [Fact]
@@ -26,7 +26,7 @@ namespace DesafioWarren.UnitTests.Domain
         {
             var account = new Account("Foo", "foo@gmail.com", "+5551999999999", "123.456.789.10");
 
-            Assert.Equal("foo@gmail.com", account.GetEmail());
+            Assert.Equal("foo@gmail.com", account.Email);
         }
 
         [Fact]
@@ -34,7 +34,7 @@ namespace DesafioWarren.UnitTests.Domain
         {
             var account = new Account("Foo", "foo@gmail.com", "+5551999999999", "123.456.789.10");
 
-            Assert.Equal("+5551999999999", account.GetPhoneNumber());
+            Assert.Equal("+5551999999999", account.PhoneNumber);
         }
 
         [Fact]
@@ -44,9 +44,9 @@ namespace DesafioWarren.UnitTests.Domain
 
             account.ChangeEmail("foo2@gmail.com");
 
-            Assert.Equal("foo2@gmail.com", account.GetEmail());
+            Assert.Equal("foo2@gmail.com", account.Email);
 
-            Assert.NotEqual("foo@gmail.com", account.GetEmail());
+            Assert.NotEqual("foo@gmail.com", account.Email);
         }
 
         [Fact]
@@ -56,9 +56,9 @@ namespace DesafioWarren.UnitTests.Domain
 
             account.ChangePhoneNumber("+5551888888888");
 
-            Assert.Equal("+5551888888888", account.GetPhoneNumber());
+            Assert.Equal("+5551888888888", account.PhoneNumber);
 
-            Assert.NotEqual("+5551999999999", account.GetPhoneNumber());
+            Assert.NotEqual("+5551999999999", account.PhoneNumber);
         }
     }
 }
