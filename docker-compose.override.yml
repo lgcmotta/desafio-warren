@@ -16,5 +16,12 @@ services:
       - ${USERPROFILE}/.aspnet/https:/https/
   
   mysql:
+    ports:
+      - "3306:3306"
     environment:
+      - MYSQL_DATABASE=db
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=huR*P!Zb952eHV
       - MYSQL_ROOT_PASSWORD=huR*P!Zb952eHV
+    volumes:
+        - mysqldata:/var/lib/mysql

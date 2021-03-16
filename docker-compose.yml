@@ -13,8 +13,6 @@ services:
   mysql:
     image: mysql:latest
     container_name: mysql
-    volumes:
-        - mysqldata:/var/lib/mysql
 
 volumes:
   mysqldata:
