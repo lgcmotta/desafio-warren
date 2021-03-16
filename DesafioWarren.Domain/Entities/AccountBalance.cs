@@ -12,6 +12,11 @@ namespace DesafioWarren.Domain.Entities
         private ICollection<AccountTransaction> _transactions = new List<AccountTransaction>();
 
         public IEnumerable<AccountTransaction> Transactions => _transactions;
+
+        public AccountBalance()
+        {
+            _balance = 0;
+        }
         
         private void AddTransaction(TransactionType transactionType) =>
             _transactions.Add(new AccountTransaction(transactionType, DateTime.Now));
@@ -85,5 +90,7 @@ namespace DesafioWarren.Domain.Entities
                 return 0;
             }
         }
+
+        public decimal GetBalance() => _balance;
     }
 }

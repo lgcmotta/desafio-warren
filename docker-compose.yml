@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  desafiowarren.api:
+    image: ${DOCKER_REGISTRY-}desafiowarrenapi
+    container_name: desafiowarren-api
+    build:
+      context: .
+      dockerfile: DesafioWarren.Api/Dockerfile
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    volumes:
+        - mysqldata:/var/lib/mysql
+
+volumes:
+  mysqldata:
+    external: false

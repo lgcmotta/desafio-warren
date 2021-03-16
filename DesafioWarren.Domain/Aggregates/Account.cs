@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using DesafioWarren.Domain.Entities;
 
 namespace DesafioWarren.Domain.Aggregates
@@ -44,5 +45,10 @@ namespace DesafioWarren.Domain.Aggregates
         public void Payment(decimal value) => _accountBalance.Payment(value);
 
         public decimal Withdraw(decimal value) => _accountBalance.Withdraw(value);
+
+        public decimal GetBalance() => _accountBalance.GetBalance();
+
+        public IEnumerable<AccountTransaction> GetAccountTransactions() => _accountBalance.Transactions;
+
     }
 }

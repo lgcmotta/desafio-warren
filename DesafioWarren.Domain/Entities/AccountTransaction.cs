@@ -3,7 +3,7 @@ using DesafioWarren.Domain.ValueObjects;
 
 namespace DesafioWarren.Domain.Entities
 {
-    internal sealed class AccountTransaction
+    public sealed class AccountTransaction
     {
         public TransactionType TransactionType { get; }
 

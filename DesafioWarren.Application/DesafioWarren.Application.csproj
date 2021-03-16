@@ -5,11 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MediatR" Version="9.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Repositories\" />
+    <ProjectReference Include="..\DesafioWarren.Infrastructure\DesafioWarren.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
