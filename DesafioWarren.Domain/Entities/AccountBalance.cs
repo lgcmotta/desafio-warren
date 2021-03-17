@@ -21,8 +21,8 @@ namespace DesafioWarren.Domain.Entities
             _balance = 0;
         }
         
-        private void AddTransaction(TransactionType transactionType) =>
-            _transactions.Add(new AccountTransaction(transactionType, DateTime.Now));
+        private void AddTransaction(TransactionType transactionType, decimal transactionValue) =>
+            _transactions.Add(new AccountTransaction(transactionType, DateTime.Now, transactionValue));
 
         public void Deposit(decimal value)
         {
@@ -32,7 +32,7 @@ namespace DesafioWarren.Domain.Entities
             {
                 _balance += value;
 
-                AddTransaction(TransactionType.Deposit);
+                AddTransaction(TransactionType.Deposit, value);
             }
             catch
             {
@@ -50,7 +50,7 @@ namespace DesafioWarren.Domain.Entities
 
                 destination.Deposit(value);
 
-                AddTransaction(TransactionType.Transfer);
+                AddTransaction(TransactionType.Transfer, value);
             }
             catch
             {
@@ -66,7 +66,7 @@ namespace DesafioWarren.Domain.Entities
             {
                 _balance -= value;
 
-                AddTransaction(TransactionType.Payment);
+                AddTransaction(TransactionType.Payment, value);
             }
             catch
             {
@@ -82,7 +82,7 @@ namespace DesafioWarren.Domain.Entities
             {
                 _balance -= value;
 
-                AddTransaction(TransactionType.Withdraw);
+                AddTransaction(TransactionType.Withdraw, value);
 
                 return _balance;
             }
