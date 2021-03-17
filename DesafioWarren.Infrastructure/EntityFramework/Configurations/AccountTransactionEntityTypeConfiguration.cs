@@ -1,0 +1,25 @@
+﻿using System.Diagnostics.CodeAnalysis;
+using DesafioWarren.Domain.Entities;
+using DesafioWarren.Domain.ValueObjects;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+namespace DesafioWarren.Infrastructure.EntityFramework.Configurations
+{
+    [ExcludeFromCodeCoverage]
+    public class AccountTransactionEntityTypeConfiguration : IEntityTypeConfiguration<AccountTransaction>
+    {
+        public void Configure(EntityTypeBuilder<AccountTransaction> builder)
+        {
+            builder.ConfigurePrimaryKey();
+
+            builder.IgnoreDomainEvents();
+
+            builder.Property(accountTransaction => accountTransaction.TransactionType)
+                .HasConversion(transactionType => transactionType.Id
+                    , id => Enumeration.GetItemById<TransactionType>(id));
+
+
+        }
+    }
+}
