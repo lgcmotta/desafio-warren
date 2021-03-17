@@ -12,6 +12,10 @@
     <PackageReference Include="FluentValidation" Version="9.5.3" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Polly" Version="7.2.1" />
+    <PackageReference Include="Serilog.AspNetCore" Version="4.0.0" />
+    <PackageReference Include="Serilog.Settings.Configuration" Version="3.1.0" />
+    <PackageReference Include="Serilog.Sinks.Async" Version="1.4.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,7 +24,6 @@
 
   <ItemGroup>
     <Folder Include="Commands\Handlers\" />
-    <Folder Include="Models\" />
     <Folder Include="Queries\" />
   </ItemGroup>
 

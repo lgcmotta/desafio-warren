@@ -7,6 +7,8 @@ using System;
 using Autofac;
 using DesafioWarren.Api.Extensions;
 using DesafioWarren.Application.Autofac;
+using DesafioWarren.Application.AutoMapper;
+using DesafioWarren.Application.Serilog;
 using DesafioWarren.Infrastructure.EntityFramework;
 using Microsoft.Identity.Web;
 
@@ -15,6 +17,8 @@ namespace DesafioWarren.Api
     public class Startup
     {
         public IConfiguration Configuration { get; }
+
+        private const string ApplicationAssembly = "DesafioWarren.Application";
 
         public Startup(IConfiguration configuration)
         {
@@ -31,6 +35,8 @@ namespace DesafioWarren.Api
             services.AddMicrosoftIdentityWebApiAuthentication(Configuration);
             
             services
+                .ConfigureSerilog(Configuration)
+                .AddAutoMapperFromAssemblies(ApplicationAssembly)
                 .AddAccountsDbContext(Configuration)
                 .ConfigureCors()
                 .ConfigureApiVersion()
@@ -38,7 +44,7 @@ namespace DesafioWarren.Api
                 .ConfigureSwaggerGen()
                 .AddControllers();
         }
-
+        
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment() || Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Docker")
