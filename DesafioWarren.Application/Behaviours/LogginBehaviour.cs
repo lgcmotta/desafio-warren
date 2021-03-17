@@ -24,7 +24,7 @@ namespace DesafioWarren.Application.Behaviours
 
             var response = await next();
 
-            _logger.LogInformation("Command '{CommandName}' handled successfully.", commandName);
+            _logger.LogInformation("Command '{CommandName}' was handled successfully.", commandName);
 
             return response;
         }

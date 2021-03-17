@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using DesafioWarren.Application.Extensions;
 using DesafioWarren.Application.Models;
 using FluentValidation;
 using FluentValidation.Results;
@@ -25,17 +25,30 @@ namespace DesafioWarren.Application.Behaviours
 
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
+            var requestName = request.GetGenericTypeName();
+
+            _logger.LogInformation("Validation behaviour started for request of type '{RequestType}'.", requestName);
+
             var validationFailures = _validators
                 .Select(validator => validator.Validate(request))
                 .SelectMany(validationResult => validationResult.Errors)
                 .Where(validationFailure => validationFailure is not null)
                 .ToList();
 
-            return validationFailures.Any() ? CreateErrorResponse(validationFailures) : await next();
+            if (validationFailures.Any())
+                return CreateErrorResponse(validationFailures);
+            
+            var response = await next();
+
+            _logger.LogInformation("Validation behaviour finished for request of type '{RequestType}' without any failure.", requestName);
+
+            return response;
         }
 
-        private static TResponse CreateErrorResponse(IEnumerable<ValidationFailure> validationFailures)
+        private TResponse CreateErrorResponse(IEnumerable<ValidationFailure> validationFailures)
         {
+            _logger.LogError("One or more validation has failed. The command of type '{RequestType} will not be processed.", typeof(TRequest).GetGenericTypeName());
+
             var response = new Response();
 
             response.AddValidationFailures(validationFailures);
