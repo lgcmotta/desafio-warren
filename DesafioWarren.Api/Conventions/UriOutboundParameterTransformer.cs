@@ -6,7 +6,7 @@ namespace DesafioWarren.Api.Conventions
 {
     public class UriOutboundParameterTransformer : IOutboundParameterTransformer
     {
-        public string? TransformOutbound(object? value)
+        public string TransformOutbound(object value)
         {
             if (value is null) return null;
 

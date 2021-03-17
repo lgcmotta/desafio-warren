@@ -1,4 +1,6 @@
 ﻿using Autofac;
+using DesafioWarren.Domain.Repositories;
+using DesafioWarren.Infrastructure.EntityFramework.Repositories;
 
 namespace DesafioWarren.Application.Autofac
 {
@@ -6,7 +8,9 @@ namespace DesafioWarren.Application.Autofac
     {
         protected override void Load(ContainerBuilder builder)
         {
-            base.Load(builder);
+            builder.RegisterType<AccountsRepository>()
+                .As<IAccountRepository>()
+                .InstancePerLifetimeScope();
         }
     }
 }
