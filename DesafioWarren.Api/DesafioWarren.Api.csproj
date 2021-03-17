@@ -24,4 +24,9 @@
     <ProjectReference Include="..\DesafioWarren.Application\DesafioWarren.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\v1\" />
+    <Folder Include="Filters\" />
+  </ItemGroup>
+
 </Project>

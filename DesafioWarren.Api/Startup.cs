@@ -12,7 +12,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Autofac;
+using DesafioWarren.Api.Extensions;
 using DesafioWarren.Application.Autofac;
+using DesafioWarren.Infrastructure.EntityFramework;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Identity.Web;
@@ -36,32 +38,14 @@ namespace DesafioWarren.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMicrosoftIdentityWebApiAuthentication(Configuration);
-
-            services.AddCors(corsOptions =>
-            {
-                corsOptions.AddDefaultPolicy(policyBuilder =>
-                {
-                    policyBuilder.AllowAnyOrigin()
-                        .AllowAnyMethod()
-                        .AllowAnyHeader();
-                });
-            });
-
-            services.AddApiVersioning(versioningOptions =>
-            {
-                versioningOptions.DefaultApiVersion = ApiVersion.Default;
-
-                versioningOptions.AssumeDefaultVersionWhenUnspecified = true;
-
-                versioningOptions.ApiVersionReader = new UrlSegmentApiVersionReader();
-            });
-
-            services.AddControllers();
-
-            services.AddSwaggerGen(options =>
-            {
-                options.SwaggerDoc("v1", new OpenApiInfo { Title = "DesafioWarren.Api", Version = "v1" });
-            });
+            
+            services
+                .AddAccountsDbContext(Configuration)
+                .ConfigureCors()
+                .ConfigureApiVersion()
+                .AddRoutingWithLowerCaseUrls()
+                .ConfigureSwaggerGen()
+                .AddControllers();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -70,23 +54,16 @@ namespace DesafioWarren.Api
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "DesafioWarren.Api v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json"
+                    , "DesafioWarren.Api v1"));
             }
 
-            app.UseCors();
-
-            app.UseHttpsRedirection();
-
-            app.UseRouting();
-
-            app.UseAuthentication();
-            
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseCors()
+                .UseHttpsRedirection()
+                .UseRouting()
+                .UseAuthentication()
+                .UseAuthorization()
+                .UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }
 }
