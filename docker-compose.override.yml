@@ -19,9 +19,9 @@ services:
     ports:
       - "3306:3306"
     environment:
-      - MYSQL_DATABASE=db
+      - MYSQL_DATABASE=DesafioWarren
       - MYSQL_USER=user
-      - MYSQL_PASSWORD=huR*P!Zb952eHV
-      - MYSQL_ROOT_PASSWORD=huR*P!Zb952eHV
+      - MYSQL_PASSWORD=V3rYStR0nGP@ssW0rD
+      - MYSQL_ROOT_PASSWORD=aDm1nStR0nGP@ssW0rD
     volumes:
         - mysqldata:/var/lib/mysql
