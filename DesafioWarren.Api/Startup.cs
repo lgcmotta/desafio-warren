@@ -11,6 +11,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Autofac;
+using DesafioWarren.Application.Autofac;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.Identity.Web;
 
 namespace DesafioWarren.Api
 {
@@ -23,31 +28,59 @@ namespace DesafioWarren.Api
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        public void ConfigureContainer(ContainerBuilder container)
+        {
+            container.AddAutofacModules();
+        }
+
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMicrosoftIdentityWebApiAuthentication(Configuration);
+
+            services.AddCors(corsOptions =>
+            {
+                corsOptions.AddDefaultPolicy(policyBuilder =>
+                {
+                    policyBuilder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                });
+            });
+
+            services.AddApiVersioning(versioningOptions =>
+            {
+                versioningOptions.DefaultApiVersion = ApiVersion.Default;
+
+                versioningOptions.AssumeDefaultVersionWhenUnspecified = true;
+
+                versioningOptions.ApiVersionReader = new UrlSegmentApiVersionReader();
+            });
 
             services.AddControllers();
-            services.AddSwaggerGen(c =>
+
+            services.AddSwaggerGen(options =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "DesafioWarren.Api", Version = "v1" });
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "DesafioWarren.Api", Version = "v1" });
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            if (env.IsDevelopment() || Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Docker")
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "DesafioWarren.Api v1"));
             }
 
+            app.UseCors();
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
+            app.UseAuthentication();
+            
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
