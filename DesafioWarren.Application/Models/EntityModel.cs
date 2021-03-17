@@ -2,8 +2,8 @@
 
 namespace DesafioWarren.Application.Models
 {
-    public class EntityModel
+    public interface IEntityModel
     {
-        public Guid Id { get; set; }    
+        Guid Id { get; }    
     }
 }

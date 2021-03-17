@@ -1,15 +1,11 @@
-﻿namespace DesafioWarren.Application.Models
+﻿using System;
+
+namespace DesafioWarren.Application.Models
 {
-    public class AccountModel : EntityModel
+    public class AccountModel : AccountModelBase, IEntityModel
     {
-        public string Name { get; set; }
-
-        public string Email { get; set; }
-
-        public string Cpf { get; set; }
+        public Guid Id { get; set; }
         
-        public string PhoneNumber { get; set; }
-
-        public decimal Balance { get; set; }    
+        public decimal Balance { get; set; }
     }
 }   

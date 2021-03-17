@@ -6,6 +6,8 @@ namespace DesafioWarren.Application.Models
 {
     public class Response
     {
+        private string _responsePath;
+
         public object Payload { get; set; }
         
         public List<ValidationFailure> Failures { get; } = new();
@@ -29,6 +31,11 @@ namespace DesafioWarren.Application.Models
         public void ClearValidationErrors() => Failures.Clear();
         
         public bool IsErrorResponse() => Failures.Any();
+
+
+        public void SetResponsePath(string responsePath) => _responsePath = responsePath;
+
+        public string GetResponsePath() => _responsePath;
     }
   
 }

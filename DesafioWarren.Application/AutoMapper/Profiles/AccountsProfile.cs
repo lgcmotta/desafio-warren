@@ -14,6 +14,8 @@ namespace DesafioWarren.Application.AutoMapper.Profiles
                     , options => options.MapFrom(account => account.GetBalance()))
                 .ReverseMap();
 
+            CreateMap<Account, AccountModelBase>().ReverseMap();
+
             CreateMap<AccountTransaction, AccountTransactionModel>()
                 .ReverseMap();
         }
