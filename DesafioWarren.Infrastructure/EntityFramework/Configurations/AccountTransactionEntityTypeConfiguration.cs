@@ -19,7 +19,8 @@ namespace DesafioWarren.Infrastructure.EntityFramework.Configurations
                 .HasConversion(transactionType => transactionType.Id
                     , id => Enumeration.GetItemById<TransactionType>(id));
 
-
+            builder.Property(accountTransaction => accountTransaction.TransactionValue)
+                .HasField("_transactionValue");
         }
     }
 }
