@@ -8,6 +8,7 @@ using Autofac;
 using DesafioWarren.Api.Extensions;
 using DesafioWarren.Application.Autofac;
 using DesafioWarren.Application.AutoMapper;
+using DesafioWarren.Application.Hubs;
 using DesafioWarren.Application.Serilog;
 using DesafioWarren.Infrastructure.EntityFramework;
 using Microsoft.Identity.Web;
@@ -35,7 +36,9 @@ namespace DesafioWarren.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMicrosoftIdentityWebApiAuthentication(Configuration);
-            
+
+            services.AddSignalR();
+
             services
                 .AddHttpContextAccessor()
                 .ConfigureSerilog(Configuration)
@@ -63,7 +66,11 @@ namespace DesafioWarren.Api
                 .UseRouting()
                 .UseAuthentication()
                 .UseAuthorization()
-                .UseEndpoints(endpoints => { endpoints.MapControllers(); });
+                .UseEndpoints(endpoints =>
+                {
+                    endpoints.MapControllers();
+                    endpoints.MapHub<AccountsHub>("/accounts/hub");
+                });
         }
     }
 }
