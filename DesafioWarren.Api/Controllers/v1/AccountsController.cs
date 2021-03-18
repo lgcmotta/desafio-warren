@@ -11,18 +11,44 @@ using Microsoft.AspNetCore.Mvc;
 namespace DesafioWarren.Api.Controllers.v1
 {
     [ApiController]
-    [Route("api/v{version:apiVersion}/[controller]")]
     [Authorize]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiVersion("1.0")]
     [ApiExceptionFilter]
-    public partial class AccountsController : ControllerBase
+    public class AccountsController : ControllerBase
     {
         private readonly IMediator _mediator;
+
+        private readonly IAccountsQueryWrapper _accountsQueryWrapper;
 
         public AccountsController(IMediator mediator, IAccountsQueryWrapper accountsQueryWrapper)
         {
             _mediator = mediator;
             _accountsQueryWrapper = accountsQueryWrapper;
+        }
+        
+        [HttpGet("{accountId}/contacts")]
+        public async Task<IActionResult> GetAccountsToTransferAsync([FromRoute] Guid accountId)
+        {
+            var response = await _accountsQueryWrapper.GetContactsAsync(accountId);
+
+            return ReturnOk(response);
+        }
+
+        [HttpGet("{accountId}/transactions")]
+        public async Task<IActionResult> GetAccountTransactionsAsync([FromRoute] Guid accountId)
+        {
+            var response = await _accountsQueryWrapper.GetAccountTransactions(accountId);
+
+            return ReturnOk(response);
+        }
+
+        [HttpGet("myself")]
+        public async Task<IActionResult> GetMyAccountDataAsync()
+        {
+            var response = await _accountsQueryWrapper.GetMyselfAsync();
+
+            return ReturnOk(response);
         }
 
         [HttpPost]
@@ -90,42 +116,10 @@ namespace DesafioWarren.Api.Controllers.v1
         {
             return FormatActionResult(Accepted(response), response);
         }
-        
+
         private IActionResult FormatActionResult(IActionResult actionResult, Response response)
         {
             return response.IsErrorResponse() ? BadRequest(response) : actionResult;
         }
-
-    }
-
-    public partial class AccountsController
-    {
-        private readonly IAccountsQueryWrapper _accountsQueryWrapper;
-
-
-        [HttpGet("{accountId}/contacts")]
-        public async Task<IActionResult> GetAccountsToTransferAsync([FromRoute] Guid accountId)
-        {
-            var response = await _accountsQueryWrapper.GetContactsAsync(accountId);
-
-            return ReturnOk(response);
-        }
-
-        [HttpGet("{accountId}/transactions")]
-        public async Task<IActionResult> GetAccountTransactionsAsync([FromRoute] Guid accountId)
-        {
-            var response = await _accountsQueryWrapper.GetAccountTransactions(accountId);
-
-            return ReturnOk(response);
-        }
-
-        [HttpGet("myself")]
-        public async Task<IActionResult> GetMyAccountDataAsync()
-        {
-            var response = await _accountsQueryWrapper.GetMyselfAsync();
-
-            return ReturnOk(response);
-        }
-
     }
 }

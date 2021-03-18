@@ -32,9 +32,4 @@ namespace DesafioWarren.Application.Hubs
             return Task.CompletedTask;
         }
     }
-
-    public interface IAccountsHub
-    {
-        public Task AppendAccountToList(Guid accountId, string connectionId);
-    }
 }

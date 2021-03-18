@@ -3,9 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using DesafioWarren.Domain.Entities;
 using DesafioWarren.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore.ValueGeneration;
 
 namespace DesafioWarren.Infrastructure.EntityFramework.Configurations
 {
@@ -41,15 +39,5 @@ namespace DesafioWarren.Infrastructure.EntityFramework.Configurations
                 .ValueGeneratedOnAddOrUpdate()
                 .HasValueGenerator<LastModifiedValueGenerator>();
         }
-    }
-
-    public class LastModifiedValueGenerator : ValueGenerator<DateTime>
-    {
-        public override DateTime Next(EntityEntry entry)
-        {
-            return DateTime.Now;
-        }
-
-        public override bool GeneratesTemporaryValues { get; }
     }
 }

@@ -49,6 +49,8 @@ namespace DesafioWarren.Api
                 .AddRoutingWithLowerCaseUrls()
                 .ConfigureSwaggerGen()
                 .AddControllers();
+
+            services.ConfigureControllers();
         }
         
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
