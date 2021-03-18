@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DesafioWarren.Domain.DomainEvents;
 using DesafioWarren.Domain.Entities;
 using DesafioWarren.Domain.ValueObjects;
 
@@ -64,5 +65,10 @@ namespace DesafioWarren.Domain.Aggregates
         public string GetCurrencyIsoCode() => _accountBalance.Currency.Value;
 
         public void DefineCurrency(string isoCode) => _accountBalance.DefineCurrency(isoCode);
+
+        public void AddAccountBalanceChangedDomainEvent()
+        {
+            AddDomainEvent(new AccountBalanceChangedDomainEvent(this));
+        }
     }
 }

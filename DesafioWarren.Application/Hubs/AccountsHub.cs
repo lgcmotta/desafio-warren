@@ -4,8 +4,15 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace DesafioWarren.Application.Hubs
 {
-    public class AccountsHub : Hub<IAccountsHub>
+    public class AccountsHub : Hub
     {
+        private readonly IConnectedAccountsManager _connectedAccountsManager;
+
+        public AccountsHub(IConnectedAccountsManager connectedAccountsManager)
+        {
+            _connectedAccountsManager = connectedAccountsManager;
+        }
+
         public override async Task OnConnectedAsync()
         {
             await base.OnConnectedAsync();
@@ -13,22 +20,21 @@ namespace DesafioWarren.Application.Hubs
 
         public override async Task OnDisconnectedAsync(Exception exception)
         {
+            _connectedAccountsManager.RemoveAccountId(Context.ConnectionId);
+
             await base.OnDisconnectedAsync(exception);
         }
-
-        public Task SendMessage(string user, string message)
+        
+        public Task AppendAccountToList(Guid accountId, string connectionId)
         {
-            return Clients.All.SendMessage(user, message);
-        }
+            _connectedAccountsManager.AppendAccountId(accountId, Context.ConnectionId);
 
-        public async Task AppendAccountToList(Guid accountId)
-        {
-            Console.WriteLine(accountId);
+            return Task.CompletedTask;
         }
     }
 
     public interface IAccountsHub
     {
-        public Task SendMessage(string user, string message);
+        public Task AppendAccountToList(Guid accountId, string connectionId);
     }
 }

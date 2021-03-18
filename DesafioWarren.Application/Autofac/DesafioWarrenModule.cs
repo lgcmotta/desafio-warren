@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using DesafioWarren.Application.Hubs;
 using DesafioWarren.Application.Queries;
 using DesafioWarren.Application.Services.Identity;
 using DesafioWarren.Domain.Repositories;
@@ -21,7 +22,10 @@ namespace DesafioWarren.Application.Autofac
             builder.RegisterType<IdentityService>()
                 .As<IIdentityService>()
                 .InstancePerLifetimeScope();
-
+            
+            builder.RegisterType<ConnectedAccountsManager>()
+                .As<IConnectedAccountsManager>()
+                .SingleInstance();
         }
     }
 }
