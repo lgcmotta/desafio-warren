@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using DesafioWarren.Domain.Aggregates;
 using DesafioWarren.Domain.Repositories;
 using DesafioWarren.Domain.UnitOfWork;
 using DesafioWarren.Infrastructure.EntityFramework.DbContexts;
+using Microsoft.EntityFrameworkCore;
 
 namespace DesafioWarren.Infrastructure.EntityFramework.Repositories
 {
@@ -35,6 +38,13 @@ namespace DesafioWarren.Infrastructure.EntityFramework.Repositories
         public void RemoveRange(IEnumerable<Account> accounts)
         {
             _context.Set<Account>().RemoveRange(accounts);
+        }
+
+        public async Task<Account> GetAccountByIdAsync(Guid accountId)
+        {
+            return await _context.Set<Account>()
+                .Include("_accountBalance")
+                .FirstOrDefaultAsync(account => account.Id == accountId);
         }
     }
 }

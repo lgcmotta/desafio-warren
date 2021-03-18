@@ -4,12 +4,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.Reflection;
 using Autofac;
 using DesafioWarren.Api.Extensions;
 using DesafioWarren.Application.Autofac;
 using DesafioWarren.Application.AutoMapper;
 using DesafioWarren.Application.Serilog;
 using DesafioWarren.Infrastructure.EntityFramework;
+using MediatR;
 using Microsoft.Identity.Web;
 
 namespace DesafioWarren.Api
@@ -20,6 +22,8 @@ namespace DesafioWarren.Api
 
         private const string ApplicationAssembly = "DesafioWarren.Application";
 
+        private const string DomainAssembly = "DesafioWarren.Domain";
+        
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -27,7 +31,7 @@ namespace DesafioWarren.Api
         
         public void ConfigureContainer(ContainerBuilder container)
         {
-            container.AddAutofacModules();
+            container.AddAutofacModules(Configuration);
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -35,9 +39,11 @@ namespace DesafioWarren.Api
             services.AddMicrosoftIdentityWebApiAuthentication(Configuration);
             
             services
+                .AddHttpContextAccessor()
                 .ConfigureSerilog(Configuration)
                 .AddAutoMapperFromAssemblies(ApplicationAssembly)
                 .AddAccountsDbContext(Configuration)
+                //.AddMediatR(Assembly.Load(ApplicationAssembly), Assembly.Load(DomainAssembly))
                 .ConfigureCors()
                 .ConfigureApiVersion()
                 .AddRoutingWithLowerCaseUrls()

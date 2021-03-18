@@ -6,6 +6,8 @@ namespace DesafioWarren.Application.Models
     {
         public Guid Id { get; set; }
         
-        public decimal Balance { get; set; }
+        public string Balance { get; set; }
+
+        public string CurrencySymbol { get; set; }
     }
 }   

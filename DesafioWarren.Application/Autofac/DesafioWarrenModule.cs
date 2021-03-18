@@ -1,16 +1,39 @@
 ﻿using Autofac;
+using DesafioWarren.Application.Services.Identity;
 using DesafioWarren.Domain.Repositories;
 using DesafioWarren.Infrastructure.EntityFramework.Repositories;
+using Microsoft.Extensions.Configuration;
+using Serilog;
+using Serilog.Core;
 
 namespace DesafioWarren.Application.Autofac
 {
     public class DesafioWarrenModule : Module
     {
+        private readonly IConfiguration _configuration;
+
+        public DesafioWarrenModule(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<AccountsRepository>()
                 .As<IAccountRepository>()
                 .InstancePerLifetimeScope();
+
+            //builder.Register(x => new LoggerConfiguration()
+            //        .ReadFrom
+            //        .Configuration(_configuration)
+            //        .CreateLogger())
+            //    .As<ILogger>()
+            //    .InstancePerLifetimeScope();
+
+            builder.RegisterType<IdentityService>()
+                .As<IIdentityService>()
+                .InstancePerLifetimeScope();
+
         }
     }
 }

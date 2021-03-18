@@ -5,7 +5,7 @@ namespace DesafioWarren.Application.Commands
 {
     public class UpdateAccountCommand : AccountIdCommand
     {
-        public AccountModelBase Account { get; }
+        public AccountModelBase Account { get; set; }
 
         public UpdateAccountCommand(Guid accountId, AccountModelBase account) : base(accountId) 
         {

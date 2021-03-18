@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
+using Serilog.Events;
 
 namespace DesafioWarren.Application.Serilog
 {
@@ -9,9 +10,15 @@ namespace DesafioWarren.Application.Serilog
         public static IServiceCollection ConfigureSerilog(this IServiceCollection serviceCollection, IConfiguration configuration)
         {
             Log.Logger = new LoggerConfiguration()
-                .ReadFrom
-                .Configuration(configuration)
+                .WriteTo
+                .Console()
+                .Enrich
+                .FromLogContext()
+                .MinimumLevel
+                .Information()
                 .CreateLogger();
+
+            serviceCollection.AddSingleton(Log.Logger);
 
             return serviceCollection;
         }

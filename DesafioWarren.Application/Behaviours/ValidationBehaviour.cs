@@ -7,17 +7,18 @@ using DesafioWarren.Application.Models;
 using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
-using Microsoft.Extensions.Logging;
+using Serilog;
+
 
 namespace DesafioWarren.Application.Behaviours
 {
-    public class ValidationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TResponse : Response
+    public class ValidationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TResponse : class
     {
         private readonly IEnumerable<IValidator<TRequest>> _validators;
 
-        private readonly ILogger<ValidationBehaviour<TRequest, TResponse>> _logger;
+        private readonly ILogger _logger;
 
-        public ValidationBehaviour(IEnumerable<IValidator<TRequest>> validators, ILogger<ValidationBehaviour<TRequest, TResponse>> logger)
+        public ValidationBehaviour(IEnumerable<IValidator<TRequest>> validators, ILogger logger)
         {
             _validators = validators;
             _logger = logger;
@@ -27,7 +28,7 @@ namespace DesafioWarren.Application.Behaviours
         {
             var requestName = request.GetGenericTypeName();
 
-            _logger.LogInformation("Validation behaviour started for request of type '{RequestType}'.", requestName);
+            _logger.Information("Validation behaviour started for request of type '{RequestType}'.", requestName);
 
             var validationFailures = _validators
                 .Select(validator => validator.Validate(request))
@@ -40,14 +41,14 @@ namespace DesafioWarren.Application.Behaviours
             
             var response = await next();
 
-            _logger.LogInformation("Validation behaviour finished for request of type '{RequestType}' without any failure.", requestName);
+            _logger.Information("Validation behaviour finished for request of type '{RequestType}' without any failure.", requestName);
 
             return response;
         }
 
         private TResponse CreateErrorResponse(IEnumerable<ValidationFailure> validationFailures)
         {
-            _logger.LogError("One or more validation has failed. The command of type '{RequestType} will not be processed.", typeof(TRequest).GetGenericTypeName());
+            _logger.Error("One or more validation has failed. The command of type '{RequestType} will not be processed.", typeof(TRequest).GetGenericTypeName());
 
             var response = new Response();
 

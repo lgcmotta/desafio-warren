@@ -2,6 +2,7 @@
 using System.Reflection;
 using Autofac;
 using DesafioWarren.Application.Behaviours;
+using FluentValidation;
 using MediatR;
 using Module = Autofac.Module;
 
@@ -41,8 +42,11 @@ namespace DesafioWarren.Application.Autofac
 
         private static void LoadModules(ContainerBuilder builder, Assembly assembly)
         {
+            AssemblyScanner.FindValidatorsInAssembly(assembly)
+                .ForEach(scannedAssembly => builder.RegisterType(scannedAssembly.ValidatorType).As(scannedAssembly.InterfaceType).InstancePerLifetimeScope());
+            
             builder.RegisterType<Mediator>().As<IMediator>().AsImplementedInterfaces();
-
+            
             builder.RegisterAssemblyTypes(assembly).AsClosedTypesOf(typeof(IRequestHandler<,>));
 
             builder.RegisterAssemblyTypes(assembly).AsClosedTypesOf(typeof(INotificationHandler<>));

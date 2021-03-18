@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using DesafioWarren.Domain.Aggregates;
 using DesafioWarren.Domain.ValueObjects;
 
@@ -10,15 +9,26 @@ namespace DesafioWarren.Domain.Entities
     {
         private decimal _balance;
 
+        private Currency _currency;
+
         private ICollection<AccountTransaction> _transactions = new List<AccountTransaction>();
 
         public IEnumerable<AccountTransaction> Transactions => _transactions;
 
+        public Currency Currency => _currency;
+
         public decimal Balance => _balance;
+
+        public AccountBalance(Currency currency)
+        {
+            _balance = 0;
+            _currency = currency;
+        }
 
         public AccountBalance()
         {
             _balance = 0;
+            _currency = Currency.BrazilianReal;
         }
         
         private void AddTransaction(TransactionType transactionType, decimal transactionValue) =>
@@ -94,6 +104,7 @@ namespace DesafioWarren.Domain.Entities
             }
         }
 
-        
+
+        public void DefineCurrency(string isoCode) => _currency = Enumeration.GetItemByValue<Currency>(isoCode);
     }
 }

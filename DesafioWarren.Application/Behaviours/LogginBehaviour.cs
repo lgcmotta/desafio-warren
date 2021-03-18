@@ -2,15 +2,16 @@
 using System.Threading.Tasks;
 using DesafioWarren.Application.Extensions;
 using MediatR;
-using Microsoft.Extensions.Logging;
+using Serilog;
+
 
 namespace DesafioWarren.Application.Behaviours
 {
     public class LoggingBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     {
-        private readonly ILogger<LoggingBehaviour<TRequest, TResponse>> _logger;
+        private readonly ILogger _logger;
 
-        public LoggingBehaviour(ILogger<LoggingBehaviour<TRequest, TResponse>> logger)
+        public LoggingBehaviour(ILogger logger)
         {
             _logger = logger;
         }
@@ -20,11 +21,11 @@ namespace DesafioWarren.Application.Behaviours
         {
             var commandName = request.GetGenericTypeName();
 
-            _logger.LogInformation("Handling command '{CommandName}'", commandName);
+            _logger.Information("Handling command '{CommandName}'", commandName);
 
             var response = await next();
 
-            _logger.LogInformation("Command '{CommandName}' was handled successfully.", commandName);
+            _logger.Information("Command '{CommandName}' was handled successfully.", commandName);
 
             return response;
         }

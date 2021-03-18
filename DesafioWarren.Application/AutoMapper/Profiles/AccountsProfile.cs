@@ -2,6 +2,7 @@
 using DesafioWarren.Application.Models;
 using DesafioWarren.Domain.Aggregates;
 using DesafioWarren.Domain.Entities;
+using DesafioWarren.Domain.ValueObjects;
 
 namespace DesafioWarren.Application.AutoMapper.Profiles
 {
@@ -12,9 +13,26 @@ namespace DesafioWarren.Application.AutoMapper.Profiles
             CreateMap<Account, AccountModel>()
                 .ForMember(accountModel => accountModel.Balance
                     , options => options.MapFrom(account => account.GetBalance()))
-                .ReverseMap();
+                .ForMember(accountModel => accountModel.CurrencySymbol
+                    , options => options.MapFrom(account => account.GetCurrencySymbol()))
+                .ForMember(accountModel => accountModel.Currency
+                    , options => options.MapFrom(account => account.GetCurrencyIsoCode()))
+                .ReverseMap()
+                .ConstructUsing(accountModel => new Account(accountModel.Name
+                    , accountModel.Email
+                    , accountModel.PhoneNumber
+                    , accountModel.Cpf
+                    , Enumeration.GetItemByValue<Currency>(accountModel.Currency)));
 
-            CreateMap<Account, AccountModelBase>().ReverseMap();
+            CreateMap<Account, AccountModelBase>()
+                .ForMember(accountModel => accountModel.Currency
+                    , options => options.MapFrom(account => account.GetCurrencyIsoCode()))
+                .ReverseMap()
+                .ConstructUsing(accountModel => new Account(accountModel.Name
+                    , accountModel.Email
+                    , accountModel.PhoneNumber
+                    , accountModel.Cpf
+                    , Enumeration.GetItemByValue<Currency>(accountModel.Currency))); 
 
             CreateMap<AccountTransaction, AccountTransactionModel>()
                 .ReverseMap();

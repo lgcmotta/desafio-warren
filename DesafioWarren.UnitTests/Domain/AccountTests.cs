@@ -1,4 +1,5 @@
 ﻿using DesafioWarren.Domain.Aggregates;
+using DesafioWarren.Domain.ValueObjects;
 using Xunit;
 
 namespace DesafioWarren.UnitTests.Domain
@@ -8,7 +9,7 @@ namespace DesafioWarren.UnitTests.Domain
         [Fact]
         public void CreateNewAccount_Sucess()
         {
-            var account = new Account("Foo", "foo@gmail.com", "+5551999999999", "123.456.789.10");
+            var account = new Account("Foo", "foo@gmail.com", "+5551999999999", "123.456.789.10", Currency.BrazilianReal);
 
             Assert.NotNull(account);
         }
@@ -16,7 +17,7 @@ namespace DesafioWarren.UnitTests.Domain
         [Fact]
         public void GetAccountName_Sucess()
         {
-            var account = new Account("Foo", "foo@gmail.com", "+5551999999999", "123.456.789.10");
+            var account = new Account("Foo", "foo@gmail.com", "+5551999999999", "123.456.789.10", Currency.BrazilianReal);
 
             Assert.Equal("Foo", account.Name);
         }
@@ -24,7 +25,7 @@ namespace DesafioWarren.UnitTests.Domain
         [Fact]
         public void GetAccountEmail_Sucess()
         {
-            var account = new Account("Foo", "foo@gmail.com", "+5551999999999", "123.456.789.10");
+            var account = new Account("Foo", "foo@gmail.com", "+5551999999999", "123.456.789.10", Currency.BrazilianReal);
 
             Assert.Equal("foo@gmail.com", account.Email);
         }
@@ -32,7 +33,7 @@ namespace DesafioWarren.UnitTests.Domain
         [Fact]
         public void GetAccountPhoneNumber_Sucess()
         {
-            var account = new Account("Foo", "foo@gmail.com", "+5551999999999", "123.456.789.10");
+            var account = new Account("Foo", "foo@gmail.com", "+5551999999999", "123.456.789.10", Currency.BrazilianReal);
 
             Assert.Equal("+5551999999999", account.PhoneNumber);
         }
@@ -40,7 +41,7 @@ namespace DesafioWarren.UnitTests.Domain
         [Fact]
         public void ChangeAccountEmail_Succes()
         {
-            var account = new Account("Foo", "foo@gmail.com", "+5551999999999", "123.456.789.10");
+            var account = new Account("Foo", "foo@gmail.com", "+5551999999999", "123.456.789.10", Currency.BrazilianReal);
 
             account.ChangeEmail("foo2@gmail.com");
 
@@ -52,7 +53,7 @@ namespace DesafioWarren.UnitTests.Domain
         [Fact]
         public void ChangePhoneNumber_Sucess()
         {
-            var account = new Account("Foo", "foo@gmail.com", "+5551999999999", "123.456.789.10");
+            var account = new Account("Foo", "foo@gmail.com", "+5551999999999", "123.456.789.10", Currency.BrazilianReal);
 
             account.ChangePhoneNumber("+5551888888888");
 

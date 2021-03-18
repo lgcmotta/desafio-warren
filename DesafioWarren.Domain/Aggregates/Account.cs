@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using DesafioWarren.Domain.Entities;
+using DesafioWarren.Domain.ValueObjects;
 
 namespace DesafioWarren.Domain.Aggregates
 {
@@ -14,7 +15,7 @@ namespace DesafioWarren.Domain.Aggregates
         
         private AccountBalance _accountBalance;
         
-        public string Cpf { get; }
+        public string Cpf { get; private set; }
         
         public string Name => _name;
 
@@ -28,14 +29,14 @@ namespace DesafioWarren.Domain.Aggregates
         
         private Account() { }
 
-        public Account(string name, string email, string phoneNumber, string cpf)
+        public Account(string name, string email, string phoneNumber, string cpf, Currency currency)
         {
             Id = Guid.NewGuid();
             _name = name;
             _email = email;
             _phoneNumber = phoneNumber;
             Cpf = cpf;
-            _accountBalance = new AccountBalance();
+            _accountBalance = new AccountBalance(currency);
         }
 
         public void Deposit(decimal value) => _accountBalance.Deposit(value);
@@ -46,9 +47,18 @@ namespace DesafioWarren.Domain.Aggregates
 
         public decimal Withdraw(decimal value) => _accountBalance.Withdraw(value);
 
-        public decimal GetBalance() => _accountBalance.Balance;
+        public string GetBalance() => $"{_accountBalance.Currency.Symbol}{decimal.Round(_accountBalance.Balance, 2, MidpointRounding.AwayFromZero)}";
 
         public IEnumerable<AccountTransaction> GetAccountTransactions() => _accountBalance.Transactions;
 
+        public void CorrectCpf(string cpf) => Cpf = cpf;
+
+        public void CorrectName(string name) => _name = name;
+
+        public string GetCurrencySymbol() => _accountBalance.Currency.Symbol;
+
+        public string GetCurrencyIsoCode() => _accountBalance.Currency.Value;
+
+        public void DefineCurrency(string isoCode) => _accountBalance.DefineCurrency(isoCode);
     }
 }

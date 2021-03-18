@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using DesafioWarren.Application.Models;
 using DesafioWarren.Infrastructure.EntityFramework.DbContexts;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace DesafioWarren.Application.Behaviours
 {
@@ -12,9 +13,9 @@ namespace DesafioWarren.Application.Behaviours
     {
         private readonly AccountsDbContext _context;
 
-        private readonly ILogger<TransactionalBehaviour<TRequest, TResponse>> _logger;
+        private readonly ILogger _logger;
 
-        public TransactionalBehaviour(AccountsDbContext context, ILogger<TransactionalBehaviour<TRequest, TResponse>> logger)
+        public TransactionalBehaviour(AccountsDbContext context, ILogger logger)
         {
             _context = context;
             _logger = logger;
@@ -28,22 +29,21 @@ namespace DesafioWarren.Application.Behaviours
 
                 if (_context.HasActiveTransaction) return await next();
 
-                _logger.LogInformation("Creating execution strategy for database.");
+                _logger.Information("Creating execution strategy for database.");
 
                 var strategy = _context.Database.CreateExecutionStrategy();
 
                 await strategy.ExecuteAsync(async () =>
                 {
+                    _logger.Information("Database transaction started.");
+                    
                     await using var transaction = await _context.BeginTransactionAsync(cancellationToken);
-
-                    _logger.LogInformation("Database transaction started - transaction id: {TransactionId}."
-                        , _context.CurrentTransaction.TransactionId);
-
+                    
                     response = await next();
 
                     await _context.CommitTransactionAsync(transaction, cancellationToken);
 
-                    _logger.LogInformation("Database transaction committed.");
+                    _logger.Information("Database transaction committed.");
                 });
 
                 return response;
@@ -51,7 +51,7 @@ namespace DesafioWarren.Application.Behaviours
             catch (Exception exception)
             {
 
-                _logger.LogError(exception, "An exception occurred when executing the transactional behaviour.");
+                _logger.Error(exception, "An exception occurred when executing the transactional behaviour.");
                 
                 return default;
             }

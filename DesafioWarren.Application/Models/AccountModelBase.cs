@@ -9,5 +9,9 @@
         public string Cpf { get; set; }
 
         public string PhoneNumber { get; set; }
+
+        public string Currency { get; set; }
+
+        
     }
 }

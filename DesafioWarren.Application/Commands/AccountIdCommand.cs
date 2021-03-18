@@ -4,11 +4,11 @@ using MediatR;
 
 namespace DesafioWarren.Application.Commands
 {
-    public abstract class AccountIdCommand : IRequest<Response>
+    public class AccountIdCommand : IRequest<Response>
     {
-        public Guid AccountId { get; }
+        public Guid AccountId { get; set; }
 
-        protected AccountIdCommand(Guid accountId)
+        public AccountIdCommand(Guid accountId)
         {
             AccountId = accountId;
         }
