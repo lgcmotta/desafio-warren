@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Linq;
+using Microsoft.AspNetCore.Http;
 
 namespace DesafioWarren.Application.Services.Identity
 {
@@ -12,5 +13,7 @@ namespace DesafioWarren.Application.Services.Identity
         }
 
         public string GetRequestPath() => _httpContextAccessor.HttpContext.Request.Path;
+        
+        public string GetUserDisplayName() => _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(claim => claim.Type == "name")?.Value;
     }
 }

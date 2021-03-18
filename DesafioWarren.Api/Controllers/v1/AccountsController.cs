@@ -104,7 +104,7 @@ namespace DesafioWarren.Api.Controllers.v1
 
 
         [HttpGet("{accountId}/contacts")]
-        public async Task<IActionResult> GetAccountsToTransfer([FromRoute] Guid accountId)
+        public async Task<IActionResult> GetAccountsToTransferAsync([FromRoute] Guid accountId)
         {
             var response = await _accountsQueryWrapper.GetContactsAsync(accountId);
 
@@ -112,9 +112,17 @@ namespace DesafioWarren.Api.Controllers.v1
         }
 
         [HttpGet("{accountId}/transactions")]
-        public async Task<IActionResult> GetAccountTransactions([FromRoute] Guid accountId)
+        public async Task<IActionResult> GetAccountTransactionsAsync([FromRoute] Guid accountId)
         {
             var response = await _accountsQueryWrapper.GetAccountTransactions(accountId);
+
+            return ReturnOk(response);
+        }
+
+        [HttpGet("myself")]
+        public async Task<IActionResult> GetMyAccountDataAsync()
+        {
+            var response = await _accountsQueryWrapper.GetMyselfAsync();
 
             return ReturnOk(response);
         }
