@@ -20,7 +20,8 @@ namespace DesafioWarren.Infrastructure.EntityFramework.Configurations
                     , id => Enumeration.GetItemById<TransactionType>(id));
 
             builder.Property(accountTransaction => accountTransaction.TransactionValue)
-                .HasField("_transactionValue");
+                .HasField("_transactionValue")
+                .HasPrecision(19, 4);
         }
     }
 }

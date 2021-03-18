@@ -5,8 +5,11 @@ namespace DesafioWarren.Application.Commands
 {
     public class AccountTransferCommand : FinancialOperationCommand
     {
-        public AccountTransferCommand(Guid accountId, decimal value) : base(accountId, value)
+        public string DestinationAccount { get; set; }
+
+        public AccountTransferCommand(Guid accountId, decimal value, string destinationAccount) : base(accountId, value)
         {
+            DestinationAccount = destinationAccount;
         }
 
         public override TransactionType GetTransactionType() => TransactionType.Transfer;

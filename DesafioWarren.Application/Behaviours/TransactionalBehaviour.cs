@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using DesafioWarren.Application.Models;
 using DesafioWarren.Infrastructure.EntityFramework.DbContexts;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

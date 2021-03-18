@@ -43,23 +43,4 @@ namespace DesafioWarren.Application.Commands.Handlers
             return response;
         }
     }
-
-    public class AccountDepositCommandHandler : IRequestHandler<AccountDepositCommand, Response>
-    {
-        private readonly IAccountRepository _accountRepository;
-
-        public AccountDepositCommandHandler(IAccountRepository accountRepository)
-        {
-            _accountRepository = accountRepository;
-        }
-
-        public async Task<Response> Handle(AccountDepositCommand request, CancellationToken cancellationToken)
-        {
-            var account = await _accountRepository.GetAccountByIdAsync(request.AccountId);
-
-            account.Deposit(request.Value);
-
-            return new Response($"{request.GetTransactionType().Value}: {account.GetCurrencySymbol()}{request.Value} - OK");
-        }
-    }
 }

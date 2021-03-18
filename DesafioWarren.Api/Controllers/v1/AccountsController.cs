@@ -40,34 +40,34 @@ namespace DesafioWarren.Api.Controllers.v1
         }
 
         [HttpPost("{accountId}/deposit")]
-        public async Task<IActionResult> PostDepositAsync([FromRoute] Guid accountId, [FromBody] decimal value)
+        public async Task<IActionResult> PostDepositAsync([FromRoute] Guid accountId, [FromBody] TransactionModel transaction)
         {
-            var response = await _mediator.Send(new AccountDepositCommand(accountId, value));
+            var response = await _mediator.Send(new AccountDepositCommand(accountId, transaction.Value));
 
             return ReturnAccepted(response);
         }
 
         [HttpPut("{accountId}/transfer")]
-        public async Task<IActionResult> PutTransferAsync([FromRoute] Guid accountId, [FromBody] decimal value)
+        public async Task<IActionResult> PutTransferAsync([FromRoute] Guid accountId, [FromBody] TransferModel transferModel)
         {
-            var response = await _mediator.Send(new AccountTransferCommand(accountId, value));
+            var response = await _mediator.Send(new AccountTransferCommand(accountId, transferModel.Value, transferModel.DestinationAccount));
 
             return ReturnAccepted(response);
         }
 
         [HttpPut("{accountId}/payment")]
-        public async Task<IActionResult> PutPaymentAsync([FromRoute] Guid accountId, [FromBody] decimal value)
+        public async Task<IActionResult> PutPaymentAsync([FromRoute] Guid accountId, [FromBody] PaymentModel transaction)
         {
 
-            var response = await _mediator.Send(new AccountPaymentCommand(accountId, value));
+            var response = await _mediator.Send(new AccountPaymentCommand(accountId, transaction.Value, transaction.InvoiceNumber));
 
             return ReturnAccepted(response);
         }
 
         [HttpPut("{accountId}/withdraw")]
-        public async Task<IActionResult> PutWithdrawAsync([FromRoute] Guid accountId, [FromBody] decimal value)
+        public async Task<IActionResult> PutWithdrawAsync([FromRoute] Guid accountId, [FromBody] TransactionModel transaction)
         {
-            var response = await _mediator.Send(new AccountWithdrawCommand(accountId, value));
+            var response = await _mediator.Send(new AccountWithdrawCommand(accountId, transaction.Value));
 
             return ReturnAccepted(response);
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using DesafioWarren.Domain.Aggregates;
 using DesafioWarren.Domain.UnitOfWork;
@@ -18,6 +19,8 @@ namespace DesafioWarren.Domain.Repositories
 
         void RemoveRange(IEnumerable<Account> accounts);
 
-        Task<Account> GetAccountByIdAsync(Guid accountId);
+        Task<Account> GetAccountByIdAsync(Guid accountId, CancellationToken cancellationToken = default);
+        
+        Task<Account> GetAccountByNumberAsync(string accountNumber, CancellationToken cancellationToken = default);
     }
 }

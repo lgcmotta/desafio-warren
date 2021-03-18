@@ -12,5 +12,7 @@ namespace DesafioWarren.Infrastructure.Dapper.Queries
         Task<Account> GetAccountByName(string name, CancellationToken cancellationToken = default);
         
         Task<Account> GetAccountByCpf(string cpf, CancellationToken cancellationToken = default);
+        
+        Task<Account> GetAccountByNumber(string destinationAccountNumber, CancellationToken cancellationToken = default);
     }
 }

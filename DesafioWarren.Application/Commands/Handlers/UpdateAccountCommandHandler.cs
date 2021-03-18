@@ -22,7 +22,7 @@ namespace DesafioWarren.Application.Commands.Handlers
 
         public async Task<Response> Handle(UpdateAccountCommand request, CancellationToken cancellationToken)
         {
-            var account = await _accountRepository.GetAccountByIdAsync(request.AccountId);
+            var account = await _accountRepository.GetAccountByIdAsync(request.AccountId, cancellationToken);
 
             ChangeCurrencyIfNecessary(request, account);
             

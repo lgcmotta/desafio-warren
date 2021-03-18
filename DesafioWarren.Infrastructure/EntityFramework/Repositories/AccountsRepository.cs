@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using DesafioWarren.Domain.Aggregates;
 using DesafioWarren.Domain.Repositories;
@@ -40,11 +41,18 @@ namespace DesafioWarren.Infrastructure.EntityFramework.Repositories
             _context.Set<Account>().RemoveRange(accounts);
         }
 
-        public async Task<Account> GetAccountByIdAsync(Guid accountId)
+        public async Task<Account> GetAccountByIdAsync(Guid accountId, CancellationToken cancellationToken = default)
         {
             return await _context.Set<Account>()
                 .Include("_accountBalance")
-                .FirstOrDefaultAsync(account => account.Id == accountId);
+                .FirstOrDefaultAsync(account => account.Id == accountId, cancellationToken: cancellationToken);
+        }
+
+        public async Task<Account> GetAccountByNumberAsync(string accountNumber, CancellationToken cancellationToken = default)
+        {
+            return await _context.Set<Account>()
+                .Include("_accountBalance")
+                .FirstOrDefaultAsync(account => account.Number == accountNumber, cancellationToken);
         }
     }
 }

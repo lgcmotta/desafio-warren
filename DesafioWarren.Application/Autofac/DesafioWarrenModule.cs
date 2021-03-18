@@ -5,8 +5,6 @@ using DesafioWarren.Infrastructure.Dapper.Factories;
 using DesafioWarren.Infrastructure.Dapper.Queries;
 using DesafioWarren.Infrastructure.EntityFramework.Repositories;
 using Microsoft.Extensions.Configuration;
-using Serilog;
-using Serilog.Core;
 
 namespace DesafioWarren.Application.Autofac
 {

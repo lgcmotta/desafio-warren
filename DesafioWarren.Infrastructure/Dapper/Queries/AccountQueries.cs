@@ -22,7 +22,7 @@ namespace DesafioWarren.Infrastructure.Dapper.Queries
 
             await connection.OpenAsync(cancellationToken);
 
-            var query = "SELECT * FROM Accounts WHERE Id = @AccountId";
+            var query = "SELECT * FROM Accounts Acc inner join AccountBalance AB on Acc.Id = AB.AccountId WHERE Acc.Id = @AccountId";
 
             return await connection.QuerySingleOrDefaultAsync<Account>(query, new {accountId});
         }
@@ -33,7 +33,7 @@ namespace DesafioWarren.Infrastructure.Dapper.Queries
 
             await connection.OpenAsync(cancellationToken);
 
-            var query = "SELECT * FROM Accounts WHERE Name = @Name";
+            var query = "SELECT * FROM Accounts Acc inner join AccountBalance AB on Acc.Id = AB.AccountId WHERE Acc. = @Name";
 
             return await connection.QuerySingleOrDefaultAsync<Account>(query, new { name });
         }
@@ -44,9 +44,20 @@ namespace DesafioWarren.Infrastructure.Dapper.Queries
 
             await connection.OpenAsync(cancellationToken);
 
-            var query = "SELECT * FROM Accounts WHERE Cpf = @Cpf";
+            var query = "SELECT * FROM Accounts Acc inner join AccountBalance AB on Acc.Id = AB.AccountId WHERE Acc. = @Cpf";
 
             return await connection.QuerySingleOrDefaultAsync<Account>(query, new { cpf });
+        }
+
+        public async Task<Account> GetAccountByNumber(string destinationAccountNumber, CancellationToken cancellationToken = default)
+        {
+            await using var connection = _connectionFactory.CreateConnection();
+
+            await connection.OpenAsync(cancellationToken);
+
+            var query = "SELECT * FROM Accounts Acc inner join AccountBalance AB on Acc.Id = AB.AccountId WHERE Acc. = @Number";
+
+            return await connection.QuerySingleOrDefaultAsync<Account>(query, new { destinationAccountNumber });
         }
     }
 }

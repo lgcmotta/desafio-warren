@@ -1,11 +1,11 @@
-﻿using DesafioWarren.Infrastructure.Dapper.Queries;
+﻿using DesafioWarren.Domain.Repositories;
 using FluentValidation;
 
 namespace DesafioWarren.Application.Commands.Validators
 {
     public class AccountDepositCommandValidator : AbstractValidator<AccountDepositCommand>
     {
-        public AccountDepositCommandValidator(IAccountQueries accountQueries)
+        public AccountDepositCommandValidator(IAccountRepository accountRepository)
         {
             RuleFor(command => command.Value)
                 .GreaterThan(0);
@@ -13,29 +13,11 @@ namespace DesafioWarren.Application.Commands.Validators
             RuleFor(command => command.AccountId)
                 .MustAsync(async (accountId, cancellationToken) =>
                 {
-                    var account = await accountQueries.GetAccountById(accountId, cancellationToken);
+                    var account = await accountRepository.GetAccountByIdAsync(accountId, cancellationToken);
 
                     return account is not null;
                 })
                 .WithMessage("There's no account with the provided id.");
         }
-    }
-
-    public class AccountTransferCommandValidator : AbstractValidator<AccountTransferCommand>
-    {
-        public AccountTransferCommandValidator(IAccountQueries accountQueries)
-        {
-            
-        }
-    }
-
-    public class AccountPaymentCommandValidator : AbstractValidator<AccountPaymentCommand>
-    {
-
-    }
-
-    public class AccountWithdrawCommandValidator : AbstractValidator<AccountWithdrawCommand>
-    {
-
     }
 }

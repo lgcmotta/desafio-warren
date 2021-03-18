@@ -5,8 +5,11 @@ namespace DesafioWarren.Application.Commands
 {
     public class AccountPaymentCommand : FinancialOperationCommand
     {
-        public AccountPaymentCommand(Guid accountId, decimal value) : base(accountId, value)
+        public string InvoiceNumber { get; set; }
+        
+        public AccountPaymentCommand(Guid accountId, decimal value, string invoiceNumber) : base(accountId, value)
         {
+            InvoiceNumber = invoiceNumber;
         }
 
         public override TransactionType GetTransactionType() => TransactionType.Payment;
