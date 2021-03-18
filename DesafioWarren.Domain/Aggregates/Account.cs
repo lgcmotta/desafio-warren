@@ -12,7 +12,9 @@ namespace DesafioWarren.Domain.Aggregates
         private string _email;
         
         private string _phoneNumber;
-        
+
+        private string _accountNumber;
+
         private AccountBalance _accountBalance;
         
         public string Cpf { get; private set; }
@@ -22,6 +24,8 @@ namespace DesafioWarren.Domain.Aggregates
         public string Email => _email;
 
         public string PhoneNumber => _phoneNumber;
+
+        public string Number => _accountNumber;
 
         public void ChangeEmail(string email) => _email = email;
 

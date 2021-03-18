@@ -9,5 +9,7 @@ namespace DesafioWarren.Application.Models
         public string Balance { get; set; }
 
         public string CurrencySymbol { get; set; }
+
+        public string Number { get; set; }
     }
 }   

@@ -18,6 +18,7 @@ namespace DesafioWarren.Infrastructure.EntityFramework.Configurations
 
             builder.Property(accountBalance => accountBalance.Balance)
                 .HasField("_balance");
+                
 
             builder.Property(accountBalance => accountBalance.Transactions)
                 .HasField("_transactions");
