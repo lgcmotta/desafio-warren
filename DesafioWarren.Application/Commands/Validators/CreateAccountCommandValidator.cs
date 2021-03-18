@@ -1,8 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Linq.Expressions;
-using DesafioWarren.Application.Extensions;
-using DesafioWarren.Application.Models;
+﻿using System.Linq;
 using DesafioWarren.Domain.ValueObjects;
 using DesafioWarren.Infrastructure.Dapper.Queries;
 using FluentValidation;
@@ -14,16 +10,16 @@ namespace DesafioWarren.Application.Commands.Validators
         public CreateAccountCommandValidator(IAccountQueries accountQueries)
         {
             RuleFor(command => command.Account.Name)
-                .StringPropertyMustNotBeNullOrEmpty();
+                .PropertyMustNotBeNullOrEmpty();
 
             RuleFor(command => command.Account.Cpf)
-                .StringPropertyMustNotBeNullOrEmpty();
+                .PropertyMustNotBeNullOrEmpty();
 
             RuleFor(command => command.Account.PhoneNumber)
-                .StringPropertyMustNotBeNullOrEmpty();
+                .PropertyMustNotBeNullOrEmpty();
 
             RuleFor(command => command.Account.Email)
-                .StringPropertyMustNotBeNullOrEmpty();
+                .PropertyMustNotBeNullOrEmpty();
 
             RuleFor(command => command.Account.Currency)
                 .Must(currency => Enumeration.GetEnumerationItems<Currency>()
@@ -45,18 +41,10 @@ namespace DesafioWarren.Application.Commands.Validators
                     var account = await accountQueries.GetAccountByCpf(cpf, cancellationToken);
 
                     return account is null;
+
                 }).WithMessage("This CPF already has an account.");
         }
         
         
-    }
-
-    public static class ValidationExtensions
-    {
-        public static IRuleBuilderOptions<TObject, string> StringPropertyMustNotBeNullOrEmpty<TObject>(this IRuleBuilderInitial<TObject, string> builderOptions)
-        {
-            return builderOptions.NotEmpty()
-                .NotNull();
-        }
     }
 }

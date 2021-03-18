@@ -22,9 +22,9 @@ namespace DesafioWarren.Infrastructure.Dapper.Queries
 
             await connection.OpenAsync(cancellationToken);
 
-            var query = "SELECT * FROM Accounts WHERE AccountId = @AccountId";
+            var query = "SELECT * FROM Accounts WHERE Id = @AccountId";
 
-            return await connection.QuerySingleAsync<Account>(query, new {accountId});
+            return await connection.QuerySingleOrDefaultAsync<Account>(query, new {accountId});
         }
 
         public async Task<Account> GetAccountByName(string name, CancellationToken cancellationToken = default)
