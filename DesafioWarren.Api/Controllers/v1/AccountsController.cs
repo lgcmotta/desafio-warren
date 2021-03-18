@@ -7,7 +7,6 @@ using DesafioWarren.Application.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 
 namespace DesafioWarren.Api.Controllers.v1
 {

@@ -27,5 +27,9 @@ namespace DesafioWarren.Domain.Repositories
         Task<IEnumerable<Account>> GetAccountsExceptAsync(Guid accountId, CancellationToken cancellationToken = default);
 
         Task<IEnumerable<AccountTransaction>> GetAccountTransactionsAsync(Guid accountId, CancellationToken cancellationToken = default);
+        
+        Task<Account> GetAccountByNameAsync(string name, CancellationToken cancellationToken = default);
+        
+        Task<Account> GetAccountByCpf(string cpf, CancellationToken cancellationToken = default);
     }
 }

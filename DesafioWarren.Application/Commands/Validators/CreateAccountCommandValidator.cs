@@ -1,13 +1,13 @@
 ﻿using System.Linq;
+using DesafioWarren.Domain.Repositories;
 using DesafioWarren.Domain.ValueObjects;
-using DesafioWarren.Infrastructure.Dapper.Queries;
 using FluentValidation;
 
 namespace DesafioWarren.Application.Commands.Validators
 {
     public class CreateAccountCommandValidator : AbstractValidator<CreateAccountCommand>
     {
-        public CreateAccountCommandValidator(IAccountQueries accountQueries)
+        public CreateAccountCommandValidator(IAccountRepository accountRepository)
         {
             RuleFor(command => command.Account.Name)
                 .PropertyMustNotBeNullOrEmpty();
@@ -29,7 +29,7 @@ namespace DesafioWarren.Application.Commands.Validators
             RuleFor(command => command.Account.Name)
                 .MustAsync(async (name, cancellationToken) =>
                 {
-                    var account = await accountQueries.GetAccountByName(name, cancellationToken);
+                    var account = await accountRepository.GetAccountByNameAsync(name, cancellationToken);
 
                     return account is null;
                 })
@@ -38,7 +38,7 @@ namespace DesafioWarren.Application.Commands.Validators
             RuleFor(command => command.Account.Cpf)
                 .MustAsync(async (cpf, cancellationToken) =>
                 {
-                    var account = await accountQueries.GetAccountByCpf(cpf, cancellationToken);
+                    var account = await accountRepository.GetAccountByCpf(cpf, cancellationToken);
 
                     return account is null;
 

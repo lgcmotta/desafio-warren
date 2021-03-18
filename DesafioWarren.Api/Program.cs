@@ -1,12 +1,10 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 using Autofac.Extensions.DependencyInjection;
 using DesafioWarren.Application.Policies;
 using DesafioWarren.Infrastructure.EntityFramework;
-using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 
 namespace DesafioWarren.Api

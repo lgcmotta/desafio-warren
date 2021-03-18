@@ -1,13 +1,12 @@
 ﻿using Autofac;
-using Microsoft.Extensions.Configuration;
 
 namespace DesafioWarren.Application.Autofac
 {
     public static class AutofacExtensions
     {
-        public static void AddAutofacModules(this ContainerBuilder containerBuilder, IConfiguration configuration)
+        public static void AddAutofacModules(this ContainerBuilder containerBuilder)
         {
-            containerBuilder.RegisterModule(new DesafioWarrenModule(configuration));
+            containerBuilder.RegisterModule(new DesafioWarrenModule());
 
             containerBuilder.RegisterModule(new MediatorModule("DesafioWarren.Application"
                 , "DesafioWarren.Infrastructure"

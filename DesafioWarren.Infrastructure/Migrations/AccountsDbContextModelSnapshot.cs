@@ -3,7 +3,6 @@ using System;
 using DesafioWarren.Infrastructure.EntityFramework.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DesafioWarren.Infrastructure.Migrations
 {

@@ -1,19 +1,19 @@
 ﻿using System.Linq;
+using DesafioWarren.Domain.Repositories;
 using DesafioWarren.Domain.ValueObjects;
-using DesafioWarren.Infrastructure.Dapper.Queries;
 using FluentValidation;
 
 namespace DesafioWarren.Application.Commands.Validators
 {
     public class UpdateAccountCommandValidator : AbstractValidator<UpdateAccountCommand>
     {
-        public UpdateAccountCommandValidator(IAccountQueries accountQueries)
+        public UpdateAccountCommandValidator(IAccountRepository accountRepository)
         {
             RuleFor(command => command.AccountId)
                 .PropertyMustNotBeNullOrEmpty()
                 .MustAsync(async (accountId, cancellationToken) =>
                 {
-                    var account = await accountQueries.GetAccountById(accountId, cancellationToken);
+                    var account = await accountRepository.GetAccountByIdAsync(accountId, cancellationToken);
 
                     return account is not null;
                 })

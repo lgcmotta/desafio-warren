@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using DesafioWarren.Domain.Aggregates;
+﻿using DesafioWarren.Domain.Aggregates;
 using DesafioWarren.Domain.ValueObjects;
 using FluentAssertions;
 using Xunit;

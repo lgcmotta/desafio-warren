@@ -72,5 +72,19 @@ namespace DesafioWarren.Infrastructure.EntityFramework.Repositories
                     $"SELECT AccountTransaction.Id AS Id, TransactionType, AccountBalanceId, TransactionValue, Occurrence FROM AccountTransaction INNER JOIN AccountBalance AB on AccountTransaction.AccountBalanceId = AB.Id INNER JOIN Accounts A on AB.AccountId = A.Id WHERE A.Id = {accountId}")
                 .ToListAsync(cancellationToken);
         }
+
+        public async Task<Account> GetAccountByNameAsync(string name, CancellationToken cancellationToken = default)
+        {
+            return await _context.Set<Account>()
+                .Include("_accountBalance")
+                .FirstOrDefaultAsync(account => account.Name == name, cancellationToken);
+        }
+
+        public async Task<Account> GetAccountByCpf(string cpf, CancellationToken cancellationToken = default)
+        {
+            return await _context.Set<Account>()
+                .Include("_accountBalance")
+                .FirstOrDefaultAsync(account => account.Cpf == cpf, cancellationToken);
+        }
     }
 }
