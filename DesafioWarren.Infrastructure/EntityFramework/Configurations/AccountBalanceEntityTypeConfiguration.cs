@@ -17,8 +17,8 @@ namespace DesafioWarren.Infrastructure.EntityFramework.Configurations
             builder.IgnoreDomainEvents();
 
             builder.Property(accountBalance => accountBalance.Balance)
-                .HasField("_balance");
-                
+                .HasField("_balance")
+                .HasPrecision(19, 4);
 
             builder.Property(accountBalance => accountBalance.Transactions)
                 .HasField("_transactions");

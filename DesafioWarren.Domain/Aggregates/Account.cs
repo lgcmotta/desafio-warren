@@ -51,7 +51,7 @@ namespace DesafioWarren.Domain.Aggregates
 
         public decimal Withdraw(decimal value) => _accountBalance.Withdraw(value);
 
-        public string GetBalance() => $"{_accountBalance.Currency.Symbol}{decimal.Round(_accountBalance.Balance, 2, MidpointRounding.AwayFromZero):##.###}:";
+        public string GetBalance() => $"{_accountBalance.Currency.Symbol}{decimal.Round(_accountBalance.Balance, 2, MidpointRounding.AwayFromZero):F}";
 
         public IEnumerable<AccountTransaction> GetAccountTransactions() => _accountBalance.Transactions;
 
