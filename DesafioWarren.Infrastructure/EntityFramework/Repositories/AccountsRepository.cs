@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using DesafioWarren.Domain.Aggregates;
+using DesafioWarren.Domain.Entities;
 using DesafioWarren.Domain.Repositories;
 using DesafioWarren.Domain.UnitOfWork;
 using DesafioWarren.Infrastructure.EntityFramework.DbContexts;
@@ -53,6 +55,22 @@ namespace DesafioWarren.Infrastructure.EntityFramework.Repositories
             return await _context.Set<Account>()
                 .Include("_accountBalance")
                 .FirstOrDefaultAsync(account => account.Number == accountNumber, cancellationToken);
+        }
+
+        public async Task<IEnumerable<Account>> GetAccountsExceptAsync(Guid accountId, CancellationToken cancellationToken = default)
+        {
+            return await _context.Set<Account>()
+                .Include("_accountBalance")
+                .Where(account => account.Id != accountId)
+                .ToListAsync(cancellationToken);
+        }
+
+        public async Task<IEnumerable<AccountTransaction>> GetAccountTransactionsAsync(Guid accountId, CancellationToken cancellationToken = default)
+        {
+            return await _context.Set<AccountTransaction>()
+                .FromSqlInterpolated(
+                    $"SELECT AccountTransaction.Id AS Id, TransactionType, AccountBalanceId, TransactionValue, Occurrence FROM AccountTransaction INNER JOIN AccountBalance AB on AccountTransaction.AccountBalanceId = AB.Id INNER JOIN Accounts A on AB.AccountId = A.Id WHERE A.Id = {accountId}")
+                .ToListAsync(cancellationToken);
         }
     }
 }

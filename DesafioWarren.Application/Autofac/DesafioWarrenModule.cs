@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using DesafioWarren.Application.Queries;
 using DesafioWarren.Application.Services.Identity;
 using DesafioWarren.Domain.Repositories;
 using DesafioWarren.Infrastructure.Dapper.Factories;
@@ -29,6 +30,10 @@ namespace DesafioWarren.Application.Autofac
 
             builder.RegisterType<AccountQueries>()
                 .As<IAccountQueries>()
+                .InstancePerLifetimeScope();
+            
+            builder.RegisterType<AccountsQueryWrapper>()
+                .As<IAccountsQueryWrapper>()
                 .InstancePerLifetimeScope();
 
             builder.RegisterType<IdentityService>()

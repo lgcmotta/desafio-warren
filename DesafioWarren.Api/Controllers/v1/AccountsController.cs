@@ -3,9 +3,11 @@ using System.Threading.Tasks;
 using DesafioWarren.Api.Filters;
 using DesafioWarren.Application.Commands;
 using DesafioWarren.Application.Models;
+using DesafioWarren.Application.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace DesafioWarren.Api.Controllers.v1
 {
@@ -14,13 +16,14 @@ namespace DesafioWarren.Api.Controllers.v1
     [Authorize]
     [ApiVersion("1.0")]
     [ApiExceptionFilter]
-    public class AccountsController : ControllerBase
+    public partial class AccountsController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public AccountsController(IMediator mediator)
+        public AccountsController(IMediator mediator, IAccountsQueryWrapper accountsQueryWrapper)
         {
             _mediator = mediator;
+            _accountsQueryWrapper = accountsQueryWrapper;
         }
 
         [HttpPost]
@@ -92,6 +95,29 @@ namespace DesafioWarren.Api.Controllers.v1
         private IActionResult FormatActionResult(IActionResult actionResult, Response response)
         {
             return response.IsErrorResponse() ? BadRequest(response) : actionResult;
+        }
+
+    }
+
+    public partial class AccountsController
+    {
+        private readonly IAccountsQueryWrapper _accountsQueryWrapper;
+
+
+        [HttpGet("{accountId}/contacts")]
+        public async Task<IActionResult> GetAccountsToTransfer([FromRoute] Guid accountId)
+        {
+            var response = await _accountsQueryWrapper.GetContactsAsync(accountId);
+
+            return ReturnOk(response);
+        }
+
+        [HttpGet("{accountId}/transactions")]
+        public async Task<IActionResult> GetAccountTransactions([FromRoute] Guid accountId)
+        {
+            var response = await _accountsQueryWrapper.GetAccountTransactions(accountId);
+
+            return ReturnOk(response);
         }
 
     }

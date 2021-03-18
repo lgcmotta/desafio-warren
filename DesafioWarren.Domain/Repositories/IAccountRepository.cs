@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using DesafioWarren.Domain.Aggregates;
+using DesafioWarren.Domain.Entities;
 using DesafioWarren.Domain.UnitOfWork;
 
 namespace DesafioWarren.Domain.Repositories
@@ -22,5 +23,9 @@ namespace DesafioWarren.Domain.Repositories
         Task<Account> GetAccountByIdAsync(Guid accountId, CancellationToken cancellationToken = default);
         
         Task<Account> GetAccountByNumberAsync(string accountNumber, CancellationToken cancellationToken = default);
+        
+        Task<IEnumerable<Account>> GetAccountsExceptAsync(Guid accountId, CancellationToken cancellationToken = default);
+
+        Task<IEnumerable<AccountTransaction>> GetAccountTransactionsAsync(Guid accountId, CancellationToken cancellationToken = default);
     }
 }

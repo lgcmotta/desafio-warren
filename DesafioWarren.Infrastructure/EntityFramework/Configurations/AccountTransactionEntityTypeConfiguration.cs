@@ -22,6 +22,9 @@ namespace DesafioWarren.Infrastructure.EntityFramework.Configurations
             builder.Property(accountTransaction => accountTransaction.TransactionValue)
                 .HasField("_transactionValue")
                 .HasPrecision(19, 4);
+
+            builder.Property(accountTransaction => accountTransaction.Occurrence)
+                .IsRequired();
         }
     }
 }
