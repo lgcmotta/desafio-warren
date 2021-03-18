@@ -28,7 +28,7 @@ namespace DesafioWarren.Api.Filters
 
             Log.Logger.Error(exception, "An exception occurred while processing the HTTP request at: {Path}", requestPath);
 
-            response.AddValidationFailure(new ValidationFailure(requestPath, $"Oops! Your request throw an unexpected error. :("));
+            response.AddValidationFailure(new Failure(requestPath, $"Oops! Your request throw an unexpected error. :("));
 
             context.Result = new BadRequestObjectResult(response);
         }

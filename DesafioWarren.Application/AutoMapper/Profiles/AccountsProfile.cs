@@ -3,6 +3,7 @@ using DesafioWarren.Application.Models;
 using DesafioWarren.Domain.Aggregates;
 using DesafioWarren.Domain.Entities;
 using DesafioWarren.Domain.ValueObjects;
+using FluentValidation.Results;
 
 namespace DesafioWarren.Application.AutoMapper.Profiles
 {
@@ -36,6 +37,8 @@ namespace DesafioWarren.Application.AutoMapper.Profiles
 
             CreateMap<AccountTransaction, AccountTransactionModel>()
                 .ReverseMap();
+
+            CreateMap<ValidationFailure, Failure>().ReverseMap();
         }
     }
 }

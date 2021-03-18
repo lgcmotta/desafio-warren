@@ -6,11 +6,11 @@ namespace DesafioWarren.Application.Models
 {
     public class Response
     {
-        private string _responsePath;
+        private string _responsePath = string.Empty;
 
         public object Payload { get; set; }
         
-        public List<ValidationFailure> Failures { get; } = new();
+        public List<Failure> Failures { get; } = new();
         
         public Response(object payload)
         {
@@ -22,11 +22,11 @@ namespace DesafioWarren.Application.Models
                 
         }
 
-        public void AddValidationFailure(ValidationFailure validationFailure) => Failures.Add(validationFailure);
+        public void AddValidationFailure(Failure validationFailure) => Failures.Add(validationFailure);
         
-        public void AddValidationFailures(IEnumerable<ValidationFailure> validationFailures) => Failures.AddRange(validationFailures);
+        public void AddValidationFailures(IEnumerable<Failure> validationFailures) => Failures.AddRange(validationFailures);
 
-        public void RemoveValidationFailure(ValidationFailure validationFailure) => Failures.Remove(validationFailure);
+        public void RemoveValidationFailure(Failure validationFailure) => Failures.Remove(validationFailure);
 
         public void ClearValidationErrors() => Failures.Clear();
         
@@ -36,6 +36,26 @@ namespace DesafioWarren.Application.Models
         public void SetResponsePath(string responsePath) => _responsePath = responsePath;
 
         public string GetResponsePath() => _responsePath;
+    }
+
+
+    public class Failure
+    {
+        public string PropertyName { get; set; }
+
+        public string ErrorMessage { get; set; }
+
+        public Failure(string propertyName, string errorMessage)
+        {
+            PropertyName = propertyName;
+            ErrorMessage = errorMessage;
+        }
+
+        public Failure()
+        {
+            
+        }
+        
     }
   
 }

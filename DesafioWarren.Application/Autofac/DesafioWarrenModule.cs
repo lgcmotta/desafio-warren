@@ -1,6 +1,8 @@
 ﻿using Autofac;
 using DesafioWarren.Application.Services.Identity;
 using DesafioWarren.Domain.Repositories;
+using DesafioWarren.Infrastructure.Dapper.Factories;
+using DesafioWarren.Infrastructure.Dapper.Queries;
 using DesafioWarren.Infrastructure.EntityFramework.Repositories;
 using Microsoft.Extensions.Configuration;
 using Serilog;
@@ -23,12 +25,13 @@ namespace DesafioWarren.Application.Autofac
                 .As<IAccountRepository>()
                 .InstancePerLifetimeScope();
 
-            //builder.Register(x => new LoggerConfiguration()
-            //        .ReadFrom
-            //        .Configuration(_configuration)
-            //        .CreateLogger())
-            //    .As<ILogger>()
-            //    .InstancePerLifetimeScope();
+            builder.RegisterType<MySqlConnectionFactory>()
+                .As<IMySqlConnectionFactory>()
+                .InstancePerLifetimeScope();
+
+            builder.RegisterType<AccountQueries>()
+                .As<IAccountQueries>()
+                .InstancePerLifetimeScope();
 
             builder.RegisterType<IdentityService>()
                 .As<IIdentityService>()

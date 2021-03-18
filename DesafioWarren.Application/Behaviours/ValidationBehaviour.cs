@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
+using AutoMapper.Internal;
 using DesafioWarren.Application.Extensions;
 using DesafioWarren.Application.Models;
 using FluentValidation;
@@ -16,11 +18,14 @@ namespace DesafioWarren.Application.Behaviours
     {
         private readonly IEnumerable<IValidator<TRequest>> _validators;
 
+        private readonly IMapper _mapper;
+
         private readonly ILogger _logger;
 
-        public ValidationBehaviour(IEnumerable<IValidator<TRequest>> validators, ILogger logger)
+        public ValidationBehaviour(IEnumerable<IValidator<TRequest>> validators, IMapper mapper, ILogger logger)
         {
             _validators = validators;
+            _mapper = mapper;
             _logger = logger;
         }
 
@@ -48,11 +53,17 @@ namespace DesafioWarren.Application.Behaviours
 
         private TResponse CreateErrorResponse(IEnumerable<ValidationFailure> validationFailures)
         {
-            _logger.Error("One or more validation has failed. The command of type '{RequestType} will not be processed.", typeof(TRequest).GetGenericTypeName());
+            _logger.Error("One or more validation has failed. The command of type '{RequestType}' will not be processed.", typeof(TRequest).GetGenericTypeName());
 
             var response = new Response();
 
-            response.AddValidationFailures(validationFailures);
+            validationFailures.ForAll(validationFailure => _logger.Error(
+                "Validation error occurred for property '{PropertyName}' with error message '{ErrorMessage}' and attempted value '{AttemptedValue}'"
+                , validationFailure.PropertyName
+                , validationFailure.ErrorMessage
+                , validationFailure.AttemptedValue));
+
+            response.AddValidationFailures(_mapper.Map<IEnumerable<Failure>>(validationFailures));
 
             return response as TResponse;
         }
