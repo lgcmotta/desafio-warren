@@ -16,14 +16,30 @@ Para rodar esse projeto é necessário ter instalado
 
 ## Generate backend certificate
 
-```
-dotnet dev-certs https -ep $env:UserProfile\.aspnet\https\desafiowarren.pfx -p desafiowarren # PowerShell
+### Powershell
 
-dotnet dev-certs https -ep %USERPROFILE%\.aspnet\https\desafiowarren.pfx -p desafiowarren # cmd
-
-dotnet dev-certs https -ep $HOME\.aspnet\https\desafiowarren.pfx -p desafiowarren # bash
+```PowerShell
+dotnet dev-certs https -ep $env:UserProfile\.aspnet\https\desafiowarren.pfx -p desafiowarren
 
 dotnet dev-certs https --trust
+```
+
+### CMD
+
+```cmd
+dotnet dev-certs https -ep %USERPROFILE%\.aspnet\https\desafiowarren.pfx -p desafiowarren
+
+dotnet dev-certs https --trust
+```
+
+### Bash
+
+```bash
+export CERT_PATH=$HOME/.aspnet/https/desafiowarren.pfx
+
+sudo dotnet dev-certs https -ep $CERT_PATH -p desafiowarren
+
+sudo dotnet dev-certs https --trust
 ```
 
 ## Linux Environment
