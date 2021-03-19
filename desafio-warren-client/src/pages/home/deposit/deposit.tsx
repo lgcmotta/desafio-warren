@@ -31,7 +31,7 @@ export const Deposit: React.FC = () => {
     
     const classes = useStyles();
     
-    const { id } = useSelector(state => state.user)
+    const { id, currencySymbol } = useSelector(state => state.user)
     
     const [show, setShow] = useState(false);
     
@@ -45,7 +45,7 @@ export const Deposit: React.FC = () => {
         async function postDeposit(){
             await postAsync<ITransactionResponse>(`/api/v1/accounts/${id.toString()}/deposit`, { value: numberValue }).then(response => {
                 if(!response.failures.length){
-                    setMessage(`${value} deposited  successfully!`);
+                    setMessage(`${currencySymbol}${value} deposited  successfully!`);
                     setSeverity("success");
                     setShow(true);
                     setValue('');

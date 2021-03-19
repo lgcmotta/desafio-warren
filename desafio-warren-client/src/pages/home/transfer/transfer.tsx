@@ -39,7 +39,7 @@ export const Transfer: React.FC = () => {
     
     const classes = useStyles();
     
-    const { id } = useSelector(state => state.user)
+    const { id, currencySymbol } = useSelector(state => state.user)
 
     const handleTransfer = () => {
         const numberValue = parseFloat(transferValue);
@@ -48,7 +48,7 @@ export const Transfer: React.FC = () => {
             await putAsync<ITransactionResponse>(`/api/v1/accounts/${id.toString()}/transfer`, { value: numberValue, destinationAccount: accountNumber })
                 .then(response => {
                     if(!response.failures.length){
-                        setMessage(`${transferValue} transferred successfully!`);
+                        setMessage(`${currencySymbol}${transferValue} transferred successfully!`);
                         setSeverity("success");
                         setShow(true);
                         setTransferValue('');
