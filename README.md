@@ -29,10 +29,3 @@ cd .\desafio-warren-client\
 npm install
 npm start
 ```
-
-## Azure AD Credentials
-
-```
-Email: desafiowarren@luizmotta01hotmail.onmicrosoft.com
-Password: C5KcCpQhq*Haybs
-```
