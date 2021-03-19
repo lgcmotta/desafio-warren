@@ -77,7 +77,7 @@ export const Payment: React.FC = () => {
                     <TextField variant="outlined" label="Invoice code or number" value={invoiceNumber} onChange={event => setInvoiceNumber(event.target.value)} fullWidth/>
                 </PaymentInvoiceNumberDiv>
                 <PaymentTyphographyDiv>
-                    <Typography variant='h5'>What's the amount for this invoice?</Typography>
+                    <Typography variant='h5'>What's the total amount for this invoice?</Typography>
                 </PaymentTyphographyDiv>
                 <PaymentMoneyInputDiv>
                     <MoneyInput onChange={setPaymentValue} value={paymentValue} />
