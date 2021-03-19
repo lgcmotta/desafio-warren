@@ -24,8 +24,10 @@ namespace DesafioWarren.Application.Commands.Validators
                 {
                     var account = await accountRepository.GetAccountByIdAsync(command.AccountId, cancellationToken);
 
-                    return decimal.TryParse(account.GetBalance().Replace(account.GetCurrencySymbol(), string.Empty)
-                        , out var balance) && balance > command.Value;
+                    decimal.TryParse(account.GetBalance().Replace(account.GetCurrencySymbol(), string.Empty)
+                        , out var balance); 
+                    
+                    return balance >= command.Value;
                 })
                 .WithMessage("You have insufficient funds to transfer this value.");
         }
