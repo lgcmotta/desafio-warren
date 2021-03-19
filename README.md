@@ -26,6 +26,26 @@ dotnet dev-certs https -ep $HOME\.aspnet\https\desafiowarren.pfx -p desafiowarre
 dotnet dev-certs https --trust
 ```
 
+## Linux Environment
+
+Se você irá utilizar linux para rodar o backend, primeiro deverá alterar algumas configurações no arquivo **docker-compose.override.yml**
+
+```yml
+desafiowarren.api:
+  environment:
+    - ASPNETCORE_ENVIRONMENT=Docker
+    - ASPNETCORE_Kestrel__Certificates__Default__Password=desafiowarren
+    - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/desafiowarren.pfx
+    - ASPNETCORE_URLS=https://+:443;http://+:80
+    - TZ=America/Sao_Paulo
+  ports:
+    - "5000:80"
+    - "5001:443"
+  # replace the volumes section as shown bellow
+  volumes:
+    - ${HOME}/.aspnet/https:/https/
+```
+
 ## Start Backend Project
 
 ```
