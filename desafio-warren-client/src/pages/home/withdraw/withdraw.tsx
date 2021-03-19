@@ -1,10 +1,5 @@
 import React, { useState } from 'react';
-import NumberFormat from 'react-number-format';
-import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import TextField from '@material-ui/core/TextField';
-import FormControl from '@material-ui/core/FormControl'
+import { Theme, makeStyles } from '@material-ui/core/styles';
 import { Button, Paper, Typography } from '@material-ui/core';
 import { WithdrawButtonDiv, WithdrawDiv, WithdrawMoneyInputDiv, WithdrawTyphographyDiv } from './withdraw.styles';
 import MoneyInput from '../common/money-input';
@@ -73,13 +68,13 @@ export const Withdraw: React.FC = () => {
     return <WithdrawDiv>
             <Paper className={classes.root}>
                 <WithdrawTyphographyDiv>
-                    <Typography variant='h5'>How much money do you want to withdraw?</Typography>
+                    <Typography variant='h5'>How much do you want to withdraw?</Typography>
                 </WithdrawTyphographyDiv>
                 <WithdrawMoneyInputDiv>
                     <MoneyInput onChange={setValue} value={value} />
                 </WithdrawMoneyInputDiv>
                 <WithdrawButtonDiv>
-                    <Button variant="contained" color="primary" fullWidth onClick={handleWithdraw}>Deposit</Button>
+                    <Button variant="contained" color="primary" fullWidth onClick={handleWithdraw}>Withdraw</Button>
                 </WithdrawButtonDiv>
             </Paper>
             <Notification show={show} setShow={setShow} message={message} severity={severity}/>

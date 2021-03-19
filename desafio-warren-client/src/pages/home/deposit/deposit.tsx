@@ -1,10 +1,5 @@
 import React, { useState } from 'react';
-import NumberFormat from 'react-number-format';
-import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import TextField from '@material-ui/core/TextField';
-import FormControl from '@material-ui/core/FormControl'
+import { Theme, makeStyles } from '@material-ui/core/styles';
 import { Button, Paper, Typography } from '@material-ui/core';
 import { DepositButtonDiv, DepositDiv, DepositMoneyInputDiv, DepositTyphographyDiv } from './deposit.styles';
 import MoneyInput from '../common/money-input';
@@ -36,7 +31,7 @@ export const Deposit: React.FC = () => {
     
     const classes = useStyles();
     
-    const { id } = useSelector(state => state.user)
+    const { id, currencySymbol } = useSelector(state => state.user)
     
     const [show, setShow] = useState(false);
     
@@ -50,7 +45,7 @@ export const Deposit: React.FC = () => {
         async function postDeposit(){
             await postAsync<ITransactionResponse>(`/api/v1/accounts/${id.toString()}/deposit`, { value: numberValue }).then(response => {
                 if(!response.failures.length){
-                    setMessage(`${value} deposited  successfully!`);
+                    setMessage(`${currencySymbol}${value} deposited  successfully!`);
                     setSeverity("success");
                     setShow(true);
                     setValue('');
