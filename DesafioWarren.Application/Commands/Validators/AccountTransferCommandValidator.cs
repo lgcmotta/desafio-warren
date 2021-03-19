@@ -29,7 +29,7 @@ namespace DesafioWarren.Application.Commands.Validators
 
                     return balance >= command.Value;
                 })
-                .WithMessage("You have insufficient funds to transfer this value.");
+                .WithMessage("You don't have sufficient funds to transfer this value.");
 
             RuleFor(command => command.DestinationAccount)
                 .MustAsync(async (destinationAccountNumber, cancellationToken) =>
