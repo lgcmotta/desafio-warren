@@ -1,10 +1,5 @@
 import React, { useState } from 'react';
-import NumberFormat from 'react-number-format';
-import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import TextField from '@material-ui/core/TextField';
-import FormControl from '@material-ui/core/FormControl'
+import { Theme, makeStyles } from '@material-ui/core/styles';
 import { Button, Paper, Typography } from '@material-ui/core';
 import { DepositButtonDiv, DepositDiv, DepositMoneyInputDiv, DepositTyphographyDiv } from './deposit.styles';
 import MoneyInput from '../common/money-input';

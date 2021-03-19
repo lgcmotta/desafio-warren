@@ -83,7 +83,7 @@ export const Payment: React.FC = () => {
                     <MoneyInput onChange={setPaymentValue} value={paymentValue} />
                 </PaymentMoneyInputDiv>
                 <PaymentButtonDiv>
-                    <Button variant="contained" color="primary" fullWidth onClick={handleTransfer}>Transfer</Button>
+                    <Button variant="contained" color="primary" fullWidth onClick={handleTransfer}>Pay</Button>
                 </PaymentButtonDiv>
             </Paper>
             <Notification show={show} setShow={setShow} message={message} severity={severity}/>
