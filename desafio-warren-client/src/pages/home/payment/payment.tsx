@@ -7,7 +7,7 @@ import MoneyInput from '../common/money-input';
 import { useSelector } from '../home.provider';
 import { ITransactionResponse } from 'models/transaction';
 import { putAsync } from 'api';
-import ErrorAlert from '../common/error-alert';
+import Notification from '../common/notification';
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
@@ -26,28 +26,39 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 
 export const Payment: React.FC = () => {
-    const [transferValue, setTransferValue] = useState('');
+    const [paymentValue, setPaymentValue] = useState('');
+    
     const [invoiceNumber, setInvoiceNumber] = useState('');
+    
     const [show, setShow] = useState(false);
-    const [failures, setFailures] =useState<string>('');
+    
+    const [message, setMessage] =useState<string>('');
+    
+    const [severity, setSeverity] = useState<"error" | "success">('error');
+    
     const classes = useStyles();
-    const { id } = useSelector(state => state.user)
+    
+    const { id, currencySymbol } = useSelector(state => state.user)
 
     const handleTransfer = () => {
-        const numberValue = parseFloat(transferValue);
+        const numberValue = parseFloat(paymentValue);
 
         async function putPayment(){
             await putAsync<ITransactionResponse>(`/api/v1/accounts/${id.toString()}/payment`, { value: numberValue, invoiceNumber: invoiceNumber })
             .then(response => {
                 if(!response.failures.length){
-                    setTransferValue('');
+                    setMessage(`${currencySymbol}${paymentValue} paid successfully!`);
+                    setSeverity("success");
+                    setShow(true);
+                    setPaymentValue('');
                     setInvoiceNumber('');
                 }
             })
             .catch(err => {
                 const failuresString = [...err.response.data.failures.map(failure => failure.errorMessage)].join(',\n');
-                setFailures(failuresString);
-                setShow(true)
+                setMessage(failuresString);
+                setSeverity("error");
+                setShow(true);
             })
 
             
@@ -69,12 +80,12 @@ export const Payment: React.FC = () => {
                     <Typography variant='h5'>How much do you want to pay?</Typography>
                 </PaymentTyphographyDiv>
                 <PaymentMoneyInputDiv>
-                    <MoneyInput onChange={setTransferValue} value={transferValue} />
+                    <MoneyInput onChange={setPaymentValue} value={paymentValue} />
                 </PaymentMoneyInputDiv>
                 <PaymentButtonDiv>
                     <Button variant="contained" color="primary" fullWidth onClick={handleTransfer}>Transfer</Button>
                 </PaymentButtonDiv>
             </Paper>
-            <ErrorAlert show={show} setShow={setShow} message={failures}/>
+            <Notification show={show} setShow={setShow} message={message} severity={severity}/>
         </PaymentDiv>
 }

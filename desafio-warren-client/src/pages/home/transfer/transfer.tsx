@@ -7,7 +7,7 @@ import { useSelector } from '../home.provider';
 import { ITransactionResponse } from 'models/transaction';
 import { putAsync } from 'api';
 import AvailableAccounts from './available-accounts';
-import ErrorAlert from '../common/error-alert';
+import Notification from '../common/notification';
 
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -28,10 +28,17 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export const Transfer: React.FC = () => {
     const [transferValue, setTransferValue] = useState('');
+    
     const [accountNumber, setAccountNumber] = useState('');
+    
     const [show, setShow] = useState(false);
-    const [failures, setFailures] =useState<string>('');
+    
+    const [message, setMessage] =useState<string>('');
+    
+    const [severity, setSeverity] = useState<"error" | "success">('error');
+    
     const classes = useStyles();
+    
     const { id } = useSelector(state => state.user)
 
     const handleTransfer = () => {
@@ -41,13 +48,17 @@ export const Transfer: React.FC = () => {
             await putAsync<ITransactionResponse>(`/api/v1/accounts/${id.toString()}/transfer`, { value: numberValue, destinationAccount: accountNumber })
                 .then(response => {
                     if(!response.failures.length){
+                        setMessage(`${transferValue} transferred successfully!`);
+                        setSeverity("success");
+                        setShow(true);
                         setTransferValue('');
                         setAccountNumber('');
                     }
                 }).catch(err => {
                     const failuresString = [...err.response.data.failures.map(failure => failure.errorMessage)].join(',\n');
-                    setFailures(failuresString);
-                    setShow(true)
+                    setMessage(failuresString);
+                    setSeverity("error");
+                    setShow(true);
                 })
 
             
@@ -75,6 +86,6 @@ export const Transfer: React.FC = () => {
                     <Button variant="contained" color="primary" fullWidth onClick={handleTransfer}>Transfer</Button>
                 </TransferButtonDiv>
             </Paper>
-            <ErrorAlert show={show} setShow={setShow} message={failures}/>
+            <Notification show={show} setShow={setShow} message={message} severity={severity}/>
         </TransferDiv>
 }

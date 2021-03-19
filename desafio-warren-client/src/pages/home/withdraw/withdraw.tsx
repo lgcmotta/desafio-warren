@@ -11,7 +11,7 @@ import MoneyInput from '../common/money-input';
 import { useSelector } from '../home.provider';
 import { ITransactionResponse } from 'models/transaction';
 import { putAsync } from 'api';
-import ErrorAlert from '../common/error-alert';
+import Notification from '../common/notification';
 
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -32,10 +32,16 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export const Withdraw: React.FC = () => {
     const [value, setValue] = useState('');
+    
     const [show, setShow] = useState(false);
-    const [failures, setFailures] =useState<string>('');
+    
+    const [message, setMessage] =useState<string>('');
+    
+    const [severity, setSeverity] = useState<"error" | "success">('error');
+    
     const classes = useStyles();
-    const { id } = useSelector(state => state.user)
+    
+    const { id, currencySymbol } = useSelector(state => state.user)
 
     const handleWithdraw = () => {
         const numberValue = parseFloat(value);
@@ -44,13 +50,17 @@ export const Withdraw: React.FC = () => {
             await putAsync<ITransactionResponse>(`/api/v1/accounts/${id.toString()}/withdraw`, { value: numberValue })
             .then(response => {
                 if(!response.failures.length){
+                    setMessage(`${currencySymbol}${value} withdrawn successfully!`);
+                    setSeverity("success");
+                    setShow(true);
                     setValue('');
                 }
             })
             .catch(err => {
                 const failuresString = [...err.response.data.failures.map(failure => failure.errorMessage)].join(',\n');
-                setFailures(failuresString);
-                setShow(true)
+                setMessage(failuresString);
+                setSeverity("error");
+                setShow(true);
             })
 
             
@@ -72,6 +82,6 @@ export const Withdraw: React.FC = () => {
                     <Button variant="contained" color="primary" fullWidth onClick={handleWithdraw}>Deposit</Button>
                 </WithdrawButtonDiv>
             </Paper>
-            <ErrorAlert show={show} setShow={setShow} message={failures}/>
+            <Notification show={show} setShow={setShow} message={message} severity={severity}/>
         </WithdrawDiv>
 }

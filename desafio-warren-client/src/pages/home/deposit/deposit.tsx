@@ -11,7 +11,7 @@ import MoneyInput from '../common/money-input';
 import { useSelector } from '../home.provider';
 import { ITransactionResponse } from 'models/transaction';
 import { postAsync } from 'api';
-import ErrorAlert from '../common/error-alert';
+import Notification from '../common/notification';
 
 
 
@@ -33,23 +33,33 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export const Deposit: React.FC = () => {
     const [value, setValue] = useState('');
+    
     const classes = useStyles();
+    
     const { id } = useSelector(state => state.user)
+    
     const [show, setShow] = useState(false);
-    const [failures, setFailures] =useState<string>('');
+    
+    const [message, setMessage] =useState<string>('');
+    
+    const [severity, setSeverity] = useState<"error" | "success">('error');
+    
     const handleDeposit = () => {
         const numberValue = parseFloat(value);
 
         async function postDeposit(){
             await postAsync<ITransactionResponse>(`/api/v1/accounts/${id.toString()}/deposit`, { value: numberValue }).then(response => {
                 if(!response.failures.length){
+                    setMessage(`${value} deposited  successfully!`);
+                    setSeverity("success");
+                    setShow(true);
                     setValue('');
-                    return;
                 }
             }).catch(err => {
                 const failuresString = [...err.response.data.failures.map(failure => failure.errorMessage)].join(',\n');
-                setFailures(failuresString);
-                setShow(true)
+                setMessage(failuresString);
+                setSeverity("error");
+                setShow(true);
             });
             
         }
@@ -70,6 +80,6 @@ export const Deposit: React.FC = () => {
                     <Button variant="contained" color="primary" fullWidth onClick={handleDeposit}>Deposit</Button>
                 </DepositButtonDiv>
             </Paper>'
-            <ErrorAlert show={show} setShow={setShow} message={failures}/>
+            <Notification show={show} setShow={setShow} message={message} severity={severity}/>
         </DepositDiv>
 }
