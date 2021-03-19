@@ -32,7 +32,4 @@ npm start
 
 ## Azure AD Credentials
 
-```
-Email: desafiowarren@luizmotta01hotmail.onmicrosoft.com
-Password: C5KcCpQhq*Haybs
-```
+Basta me pedir :)
