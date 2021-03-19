@@ -71,7 +71,7 @@ export const Transfer: React.FC = () => {
     return <TransferDiv>
             <Paper className={classes.root}>
                 <TransferTyphographyDiv>
-                    <Typography variant='h5'>Who do you want to transfer to?</Typography>
+                    <Typography variant='h5'>To whom do you want to transfer?</Typography>
                 </TransferTyphographyDiv>
                 <TransferTyphographyDiv>
                     <AvailableAccounts accountNumber={accountNumber} onSelectedAccountChange={setAccountNumber}/>

@@ -68,7 +68,7 @@ export const Withdraw: React.FC = () => {
     return <WithdrawDiv>
             <Paper className={classes.root}>
                 <WithdrawTyphographyDiv>
-                    <Typography variant='h5'>How much money do you want to withdraw?</Typography>
+                    <Typography variant='h5'>How much do you want to withdraw?</Typography>
                 </WithdrawTyphographyDiv>
                 <WithdrawMoneyInputDiv>
                     <MoneyInput onChange={setValue} value={value} />

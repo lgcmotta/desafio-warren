@@ -71,13 +71,13 @@ export const Payment: React.FC = () => {
     return <PaymentDiv>
             <Paper className={classes.root}>
                 <PaymentTyphographyDiv>
-                    <Typography variant='h5'>Please, inform the invoice code or number</Typography>
+                    <Typography variant='h5'>Please enter the code or invoice number</Typography>
                 </PaymentTyphographyDiv>
                 <PaymentInvoiceNumberDiv>
                     <TextField variant="outlined" label="Invoice code or number" value={invoiceNumber} onChange={event => setInvoiceNumber(event.target.value)} fullWidth/>
                 </PaymentInvoiceNumberDiv>
                 <PaymentTyphographyDiv>
-                    <Typography variant='h5'>How much do you want to pay?</Typography>
+                    <Typography variant='h5'>What's the amount for this invoice?</Typography>
                 </PaymentTyphographyDiv>
                 <PaymentMoneyInputDiv>
                     <MoneyInput onChange={setPaymentValue} value={paymentValue} />
