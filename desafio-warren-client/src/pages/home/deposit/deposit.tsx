@@ -45,7 +45,7 @@ export const Deposit: React.FC = () => {
         async function postDeposit(){
             await postAsync<ITransactionResponse>(`/api/v1/accounts/${id.toString()}/deposit`, { value: numberValue }).then(response => {
                 if(!response.failures.length){
-                    setMessage(`${currencySymbol}${value} deposited  successfully!`);
+                    setMessage(`${currencySymbol}${value} deposited successfully!`);
                     setSeverity("success");
                     setShow(true);
                     setValue('');
