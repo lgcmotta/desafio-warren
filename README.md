@@ -14,11 +14,25 @@ Para rodar esse projeto é necessário ter instalado
 - **Docker**
 - **Node.js**
 
+## Generate backend certificate
+
+```
+dotnet dev-certs https -ep $env:UserProfile\.aspnet\https\desafiowarren.pfx -p desafiowarren # PowerShell
+
+dotnet dev-certs https -ep %USERPROFILE%\.aspnet\https\desafiowarren.pfx -p desafiowarren # cmd
+
+dotnet dev-certs https -ep $HOME\.aspnet\https\desafiowarren.pfx -p desafiowarren # bash
+
+dotnet dev-certs https --trust
+```
+
 ## Start Backend Project
 
 ```
 git clone https://github.com/luizmotta01/desafio-warren.git desafio-warren
+
 cd .\desafio-warren\
+
 docker-compose up -d # silent mode, to see containers logs remove the '-d' parameter
 ```
 
@@ -26,7 +40,9 @@ docker-compose up -d # silent mode, to see containers logs remove the '-d' param
 
 ```
 cd .\desafio-warren-client\
+
 npm install
+
 npm start
 ```
 
