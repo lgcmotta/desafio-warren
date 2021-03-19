@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using DesafioWarren.Application.Hubs;
 using DesafioWarren.Domain.DomainEvents;
@@ -21,9 +22,10 @@ namespace DesafioWarren.Application.DomainEventHandlers
 
         public async Task Handle(AccountBalanceChangedDomainEvent notification, CancellationToken cancellationToken)
         {
-            var connectedAccount = _connectedAccountsManager.GetAccountConnectedId(notification.Account.Id);
+            var connectedAccounts = _connectedAccountsManager.GetConnectionIdsForAccount(notification.Account.Id).ToList();
+            
+            await _hubContext.Clients.Clients(connectedAccounts).SendCoreAsync("AccountBalanceChanged", new[] { notification.Account.GetBalance() }, cancellationToken);
 
-            await _hubContext.Clients.Client(connectedAccount).SendCoreAsync("SendMessage", new[] {"foo", "bar"}, cancellationToken);
         }
     }
 }

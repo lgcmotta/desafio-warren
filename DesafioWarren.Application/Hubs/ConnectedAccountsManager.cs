@@ -10,6 +10,13 @@ namespace DesafioWarren.Application.Hubs
 
         public void AppendAccountId(Guid accountId, string connectionId)
         {
+            var accounts = _connectedAccounts.Where(tuple => tuple.AccountId == accountId).ToList();
+
+            foreach (var account in accounts)
+            {
+                _connectedAccounts.Remove(account);
+            }
+
             _connectedAccounts.Add((accountId, connectionId));
         }
 
@@ -21,12 +28,10 @@ namespace DesafioWarren.Application.Hubs
             _connectedAccounts.Remove(accountToRemove);
         }
 
-        public string GetAccountConnectedId(Guid accountId)
+        public IEnumerable<string> GetConnectionIdsForAccount(Guid accountId)
         {
-            var connectedAccount = _connectedAccounts.FirstOrDefault(connectedAccount =>
-                connectedAccount.AccountId == accountId);
-
-            return connectedAccount.ConnectionId;
+            return _connectedAccounts.Where(connectedAccount =>
+                connectedAccount.AccountId == accountId).Select(connectedAccount => connectedAccount.ConnectionId);
         }
     }
 }

@@ -22,6 +22,8 @@ namespace DesafioWarren.Application.Commands.Handlers
 
             account.Payment(request.Value);
 
+            account.AddAccountBalanceChangedDomainEvent();
+
             await _accountRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
 
             var transactionResult = new TransactionResult("OK"

@@ -36,6 +36,7 @@ namespace DesafioWarren.Application.Queries
                 , Email = account.Email
                 , PhoneNumber = account.PhoneNumber
                 , Currency = account.GetCurrencyIsoCode()
+                , Number =  account.Number
             });
 
             return new Response(accountsModels);

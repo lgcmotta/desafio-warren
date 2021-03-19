@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace DesafioWarren.Application.Hubs
@@ -9,6 +10,6 @@ namespace DesafioWarren.Application.Hubs
 
         void RemoveAccountId(string connectionId);
 
-        string GetAccountConnectedId(Guid accountId);
+        IEnumerable<string> GetConnectionIdsForAccount(Guid accountId);
     }
 }

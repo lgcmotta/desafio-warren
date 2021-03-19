@@ -19,7 +19,8 @@ namespace DesafioWarren.Application.AutoMapper.Profiles
                     Cpf = account.Cpf,
                     Email = account.Email,
                     PhoneNumber = account.PhoneNumber,
-                    Currency = account.GetCurrencyIsoCode()
+                    Currency = account.GetCurrencyIsoCode(),
+                    Number = account.Number,
                 })
                 .ReverseMap()
                 .ConstructUsing(accountModel => new Account(accountModel.Name

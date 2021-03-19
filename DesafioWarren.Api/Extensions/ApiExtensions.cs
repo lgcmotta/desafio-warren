@@ -23,9 +23,10 @@ namespace DesafioWarren.Api.Extensions
         public static IServiceCollection ConfigureCors(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddCors(corsOptions => corsOptions.AddDefaultPolicy(policyBuilder => policyBuilder
-                .AllowAnyOrigin()
                 .AllowAnyMethod()
-                .AllowAnyHeader()));
+                .AllowAnyHeader()
+                .SetIsOriginAllowed((host) => true)
+                .AllowCredentials()));
 
             return serviceCollection;
         }
