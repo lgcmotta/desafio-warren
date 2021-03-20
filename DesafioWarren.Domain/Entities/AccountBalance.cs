@@ -11,18 +11,27 @@ namespace DesafioWarren.Domain.Entities
 
         private Currency _currency;
 
-        private ICollection<AccountTransaction> _transactions = new List<AccountTransaction>();
+        private DateTime _lastModified;
 
+        private ICollection<AccountTransaction> _transactions = new List<AccountTransaction>();
+        
         public IEnumerable<AccountTransaction> Transactions => _transactions;
 
         public Currency Currency => _currency;
 
         public decimal Balance => _balance;
 
+        public DateTime LastModified    
+        {
+            get => _lastModified;
+            private set => _lastModified = value;
+        }
+
         public AccountBalance(Currency currency)
         {
             _balance = 0;
             _currency = currency;
+            _lastModified = DateTime.Now;
         }
 
         public AccountBalance()
@@ -31,8 +40,14 @@ namespace DesafioWarren.Domain.Entities
             _currency = Currency.BrazilianReal;
         }
         
-        private void AddTransaction(TransactionType transactionType, decimal transactionValue) =>
-            _transactions.Add(new AccountTransaction(transactionType, DateTime.Now, transactionValue));
+        private void AddTransaction(TransactionType transactionType, decimal transactionValue, decimal balanceBeforeTransaction)
+        {
+            var now = DateTime.Now;
+
+            _transactions.Add(new AccountTransaction(transactionType, now, transactionValue, balanceBeforeTransaction));
+
+            _lastModified = now;
+        }
 
         public void Deposit(decimal value)
         {
@@ -42,7 +57,7 @@ namespace DesafioWarren.Domain.Entities
             {
                 _balance += value;
 
-                AddTransaction(TransactionType.Deposit, value);
+                AddTransaction(TransactionType.Deposit, value, backupBalance);
             }
             catch
             {
@@ -60,7 +75,7 @@ namespace DesafioWarren.Domain.Entities
 
                 destination.Deposit(value);
 
-                AddTransaction(TransactionType.Transfer, value);
+                AddTransaction(TransactionType.Transfer, value, backupBalance);
             }
             catch
             {
@@ -76,7 +91,7 @@ namespace DesafioWarren.Domain.Entities
             {
                 _balance -= value;
 
-                AddTransaction(TransactionType.Payment, value);
+                AddTransaction(TransactionType.Payment, value, backupBalance);
             }
             catch
             {
@@ -92,7 +107,7 @@ namespace DesafioWarren.Domain.Entities
             {
                 _balance -= value;
 
-                AddTransaction(TransactionType.Withdraw, value);
+                AddTransaction(TransactionType.Withdraw, value, backupBalance);
 
                 return _balance;
             }
@@ -103,8 +118,25 @@ namespace DesafioWarren.Domain.Entities
                 return 0;
             }
         }
+        public void Earnings(decimal value)
+        {
+            var backupBalance = _balance;
 
+            try
+            {
+                _balance += value;
+
+                AddTransaction(TransactionType.Earnings, value, backupBalance);
+
+            }
+            catch
+            {
+                _balance = backupBalance;
+            }
+        }
 
         public void DefineCurrency(string isoCode) => _currency = Enumeration.GetItemByValue<Currency>(isoCode);
+
+        
     }
 }

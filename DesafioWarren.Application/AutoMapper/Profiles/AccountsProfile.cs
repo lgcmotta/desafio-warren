@@ -45,6 +45,7 @@ namespace DesafioWarren.Application.AutoMapper.Profiles
             
             CreateMap<AccountTransaction, AccountTransactionModel>()
                 .ForMember(accountTransactionModel => accountTransactionModel.TransactionType, options => options.MapFrom(transaction => transaction.TransactionType.Value))
+                .ForMember(accountTransactionModel => accountTransactionModel.BalanceAfterTransaction, options => options.MapFrom(transaction => transaction.BalanceBeforeTransaction + transaction.TransactionValue))
                 .ReverseMap();
 
             CreateMap<ValidationFailure, Failure>().ReverseMap();

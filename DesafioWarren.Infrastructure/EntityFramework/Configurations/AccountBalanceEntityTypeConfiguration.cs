@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using DesafioWarren.Domain.Entities;
 using DesafioWarren.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
@@ -35,9 +34,8 @@ namespace DesafioWarren.Infrastructure.EntityFramework.Configurations
                 .HasForeignKey("AccountBalanceId")
                 .OnDelete(DeleteBehavior.ClientSetNull);
 
-            builder.Property<DateTime>("LastModified")
-                .ValueGeneratedOnAddOrUpdate()
-                .HasValueGenerator<LastModifiedValueGenerator>();
+            builder.Property(accountBalance => accountBalance.LastModified)
+                .HasField("_lastModified");
         }
     }
 }

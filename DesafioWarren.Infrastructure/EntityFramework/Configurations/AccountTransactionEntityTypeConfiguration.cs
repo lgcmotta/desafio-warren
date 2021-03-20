@@ -23,6 +23,10 @@ namespace DesafioWarren.Infrastructure.EntityFramework.Configurations
                 .HasField("_transactionValue")
                 .HasPrecision(19, 4);
 
+            builder.Property(accountTransaction => accountTransaction.BalanceBeforeTransaction)
+                .HasField("_balanceBeforeTransaction")
+                .HasPrecision(19, 4);
+
             builder.Property(accountTransaction => accountTransaction.Occurrence)
                 .IsRequired();
         }

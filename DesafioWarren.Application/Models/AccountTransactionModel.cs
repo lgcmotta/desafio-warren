@@ -11,7 +11,11 @@ namespace DesafioWarren.Application.Models
         public DateTime Occurrence { get; set; }
 
         public decimal TransactionValue { get; set; }
-
         
+        public decimal BalanceBeforeTransaction { get; set; }
+
+        public decimal BalanceAfterTransaction { get; set; }
+
+        public decimal? EarningsTaxPerDay { get; set; }
     }
 }

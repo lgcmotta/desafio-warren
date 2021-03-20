@@ -29,10 +29,11 @@ namespace DesafioWarren.Infrastructure.EntityFramework.Configurations
                 .HasField("_accountNumber")
                 .HasValueGenerator<AccountNumberValueGenerator>();
 
+            builder.Property(account => account.LastModified)
+                .HasField("_lastModified");
+
             builder.Property<DateTime>("Created");
-
-            builder.Property<DateTime>("LastModified");
-
+            
             builder.HasOne(typeof(AccountBalance), "_accountBalance")
                 .WithOne()
                 .HasForeignKey(typeof(AccountBalance), "AccountId")

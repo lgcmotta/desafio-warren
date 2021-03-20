@@ -31,5 +31,7 @@ namespace DesafioWarren.Domain.Repositories
         Task<Account> GetAccountByNameAsync(string name, CancellationToken cancellationToken = default);
         
         Task<Account> GetAccountByCpf(string cpf, CancellationToken cancellationToken = default);
+        
+        Task<IEnumerable<Account>> GetAccountsAsync(CancellationToken cancellationToken = default);
     }
 }

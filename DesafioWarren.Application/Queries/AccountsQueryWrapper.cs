@@ -4,9 +4,12 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using AutoMapper.Internal;
 using DesafioWarren.Application.Models;
 using DesafioWarren.Application.Services.Identity;
 using DesafioWarren.Domain.Repositories;
+using DesafioWarren.Domain.ValueObjects;
+using Microsoft.Extensions.Configuration;
 
 namespace DesafioWarren.Application.Queries
 {
@@ -18,11 +21,14 @@ namespace DesafioWarren.Application.Queries
 
         private readonly IIdentityService _identityService;
 
-        public AccountsQueryWrapper(IAccountRepository accountRepository, IMapper mapper, IIdentityService identityService)
+        private readonly decimal _earningsTaxPerDay;
+
+        public AccountsQueryWrapper(IAccountRepository accountRepository, IMapper mapper, IIdentityService identityService, IConfiguration configuration)
         {
             _accountRepository = accountRepository;
             _mapper = mapper;
             _identityService = identityService;
+            _earningsTaxPerDay = configuration.GetValue<decimal>("EarningsPerDayTax");
         }
 
         public async Task<Response> GetContactsAsync(Guid accountId, CancellationToken cancellationToken = default)
@@ -46,7 +52,9 @@ namespace DesafioWarren.Application.Queries
         {
             var transactions = await _accountRepository.GetAccountTransactionsAsync(accountId, cancellationToken);
 
-            var transactionsModels = _mapper.Map<IEnumerable<AccountTransactionModel>>(transactions);
+            var transactionsModels = _mapper.Map<IEnumerable<AccountTransactionModel>>(transactions).ToList();
+
+            transactionsModels.ForAll(transactionsModel => transactionsModel.EarningsTaxPerDay = transactionsModel.TransactionType == TransactionType.Earnings.Value ? _earningsTaxPerDay : null);
 
             return new Response(transactionsModels);
         }

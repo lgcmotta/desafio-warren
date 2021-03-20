@@ -9,9 +9,11 @@ using DesafioWarren.Api.Extensions;
 using DesafioWarren.Application.Autofac;
 using DesafioWarren.Application.AutoMapper;
 using DesafioWarren.Application.Hubs;
+using DesafioWarren.Application.Quartz;
 using DesafioWarren.Application.Serilog;
 using DesafioWarren.Infrastructure.EntityFramework;
 using Microsoft.Identity.Web;
+using Quartz;
 
 namespace DesafioWarren.Api
 {
@@ -44,6 +46,8 @@ namespace DesafioWarren.Api
                 .ConfigureSerilog(Configuration)
                 .AddAutoMapperFromAssemblies(ApplicationAssembly)
                 .AddAccountsDbContext(Configuration)
+                .AddQuartzJobs()
+                .AddQuartzHostedService(quartz => quartz.WaitForJobsToComplete = true)
                 .ConfigureCors()
                 .ConfigureApiVersion()
                 .AddRoutingWithLowerCaseUrls()

@@ -9,6 +9,8 @@
         public static TransactionType Payment => new(2, "Payment");
 
         public static TransactionType Withdraw => new(3, "Withdraw");
+
+        public static TransactionType Earnings => new(4, "Earnings");
         
 
         public TransactionType(int id, string value) : base(id, value)

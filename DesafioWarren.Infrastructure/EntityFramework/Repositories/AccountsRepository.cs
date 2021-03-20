@@ -69,7 +69,7 @@ namespace DesafioWarren.Infrastructure.EntityFramework.Repositories
         {
             return await _context.Set<AccountTransaction>()
                 .FromSqlInterpolated(
-                    $"SELECT AccountTransaction.Id AS Id, TransactionType, AccountBalanceId, TransactionValue, Occurrence FROM AccountTransaction INNER JOIN AccountBalance AB on AccountTransaction.AccountBalanceId = AB.Id INNER JOIN Accounts A on AB.AccountId = A.Id WHERE A.Id = {accountId}")
+                    $"SELECT AccountTransaction.Id AS Id, TransactionType, AccountBalanceId, TransactionValue, BalanceBeforeTransaction, Occurrence FROM AccountTransaction INNER JOIN AccountBalance AB on AccountTransaction.AccountBalanceId = AB.Id INNER JOIN Accounts A on AB.AccountId = A.Id WHERE A.Id = {accountId}")
                 .ToListAsync(cancellationToken);
         }
 
@@ -85,6 +85,13 @@ namespace DesafioWarren.Infrastructure.EntityFramework.Repositories
             return await _context.Set<Account>()
                 .Include("_accountBalance")
                 .FirstOrDefaultAsync(account => account.Cpf == cpf, cancellationToken);
+        }
+
+        public async Task<IEnumerable<Account>> GetAccountsAsync(CancellationToken cancellationToken = default)
+        {
+            return await _context.Set<Account>()
+                .Include("_accountBalance")
+                .ToListAsync(cancellationToken);
         }
     }
 }

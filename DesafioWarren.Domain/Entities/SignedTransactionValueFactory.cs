@@ -12,6 +12,7 @@ namespace DesafioWarren.Domain.Entities
             , (-1, TransactionType.Payment)     
             , (-1, TransactionType.Transfer)
             , (-1, TransactionType.Withdraw)
+            , (1, TransactionType.Earnings)
         };  
 
 

@@ -22,7 +22,7 @@ namespace DesafioWarren.Application.Autofac
             builder.RegisterType<IdentityService>()
                 .As<IIdentityService>()
                 .InstancePerLifetimeScope();
-            
+           
             builder.RegisterType<ConnectedAccountsManager>()
                 .As<IConnectedAccountsManager>()
                 .SingleInstance();

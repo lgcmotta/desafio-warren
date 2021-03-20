@@ -10,6 +10,5 @@ namespace DesafioWarren.Application.Models
 
         public string CurrencySymbol { get; set; }
 
-        
     }
 }   
