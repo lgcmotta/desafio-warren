@@ -38,6 +38,8 @@ namespace DesafioWarren.Application.Commands.Handlers
                 var earnings = balance * _earningsPerDayTax - balance;
 
                 account.Earnings(earnings);
+
+                account.AddAccountBalanceChangedDomainEvent();
             }
 
             await _accountRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
