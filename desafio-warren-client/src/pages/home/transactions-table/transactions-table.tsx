@@ -31,14 +31,17 @@ export const TransactionsTable: React.FC = () => {
     const data = transactions.map(transaction => {
         return {
             id: transaction.id,
-            transactionType: transaction.transactionType,
             occurrence: transaction.occurrence,
+            transactionType: transaction.transactionType,
+            tax: transaction.transactionType === 'Earnings' ? `${transaction.earningsTaxPerDay}%` : '',
+            before: `${currencySymbol}${transaction.balanceBeforeTransaction.toFixed(2)}`,
             credit: transaction.transactionValue > 0 
                 ? `${currencySymbol}${transaction.transactionValue.toFixed(2)}` 
                 : '',
             debit: transaction.transactionValue < 0 
                 ? `-${currencySymbol}${(transaction.transactionValue * -1).toFixed(2)}`
-                : ''
+                : '',
+            after: `${currencySymbol}${transaction.balanceAfterTransaction.toFixed(2)}`
         }
     })
 
@@ -58,10 +61,13 @@ export const TransactionsTable: React.FC = () => {
                                     width: 350,
                                     maxWidth: 350
                                 }},
-                                {title: 'Transaction', field: 'transactionType'},
                                 {title: 'Occurence', field: 'occurrence', render: row => <span><DateComponent date={row.occurrence} format={format} /></span>},
+                                {title: 'Transaction', field: 'transactionType'},
+                                {title: 'Tax', field: 'tax'},
+                                {title: 'Balance Before', field: 'before'},
                                 {title: 'Credit', field: 'credit'},
                                 {title: 'Debit', field: 'debit' },
+                                {title: 'Balance After', field: 'after'}
                             ]} 
                             data={data}>
 

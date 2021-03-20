@@ -11,4 +11,7 @@ interface ITransaction {
     transactionType: string;
     occurrence: Date;
     transactionValue: number;
+    balanceBeforeTransaction: number,
+    balanceAfterTransaction: number,
+    earningsTaxPerDay: number | null
 }
