@@ -15,7 +15,7 @@ class AzureConfiguration{
         return `${window.location.origin}/callback`;
     }
     getMSALNavigateToLoginRequestUrl():boolean{
-        return false;
+        return true;
     }
     getMSALCacheLocation():string{
         return process.env.REACT_APP_AZURE_CACHE_LOCATION as string;
