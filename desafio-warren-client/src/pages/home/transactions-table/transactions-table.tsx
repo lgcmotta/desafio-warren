@@ -44,28 +44,30 @@ export const TransactionsTable: React.FC = () => {
 
     const format = currency === 'USD' ? 'MM-DD-YYYY hh:mm:ss' : 'DD/MM/YYYY hh:mm:ss';
 
+    const columns:any[] = [
+        {title: 'Transaction Identifier', field: 'id', cellStyle: {
+            width: 250,
+            maxWidth: 350
+        },
+        headerStyle: {
+            width: 350,
+            maxWidth: 350
+        }},
+        {title: 'Occurence', field: 'occurrence', render: row => <span><DateComponent date={row.occurrence} format={format} /></span>},
+        {title: 'Transaction', field: 'transactionType'},
+        {title: 'Tax', field: 'tax'},
+        {title: 'Balance Before', field: 'before'},
+        {title: 'Credit', field: 'credit'},
+        {title: 'Debit', field: 'debit' },
+        {title: 'Balance After', field: 'after'}
+    ]; 
+
     return <TransactionsTableDiv>
                 <AccountDetails {...user}/>
                 <MaterialTable 
                             title="Transactions"
                             options={{maxBodyHeight: '350px', minBodyHeight: '350px'}}
-                            columns={[
-                                {title: 'Transaction Identifier', field: 'id', cellStyle: {
-                                    width: 250,
-                                    maxWidth: 350
-                                },
-                                headerStyle: {
-                                    width: 350,
-                                    maxWidth: 350
-                                }},
-                                {title: 'Occurence', field: 'occurrence', render: row => <span><DateComponent date={row.occurrence} format={format} /></span>},
-                                {title: 'Transaction', field: 'transactionType'},
-                                {title: 'Tax', field: 'tax'},
-                                {title: 'Balance Before', field: 'before'},
-                                {title: 'Credit', field: 'credit'},
-                                {title: 'Debit', field: 'debit' },
-                                {title: 'Balance After', field: 'after'}
-                            ]} 
+                            columns={columns} 
                             data={data}>
 
                 </MaterialTable>
