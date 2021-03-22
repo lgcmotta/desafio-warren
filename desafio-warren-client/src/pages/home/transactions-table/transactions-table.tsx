@@ -25,9 +25,6 @@ export const TransactionsTable: React.FC = () => {
 
     }, [])
 
-    if(!transactions.length) return <></>
-   
-
     const data = transactions.map(transaction => {
         return {
             id: transaction.id,
