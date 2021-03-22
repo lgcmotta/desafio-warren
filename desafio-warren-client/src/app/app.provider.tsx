@@ -1,13 +1,19 @@
 import React from 'react';
-import { Provider } from "react-redux";
-import { authenticationReducer } from '../api/authentication/authentication.reducer';
+import { PublicClientApplication } from '@azure/msal-browser';
+import { MsalProvider } from '@azure/msal-react';
 import { AppContextProvider } from './app.context';
-
+import { msalConfiguration } from '../api/authentication/msal-configuration';
 
 const AppProviders: React.FC = ({ children }) => {
-    return <Provider store={authenticationReducer} >
-        <AppContextProvider>{children}</AppContextProvider>
-    </Provider>
+
+    const msalInstance = new PublicClientApplication(msalConfiguration);
+    
+    return (
+        <MsalProvider instance={msalInstance}>
+            <AppContextProvider>{children}</AppContextProvider>
+        </MsalProvider>
+        );
+    
 }
 
 export { AppProviders as default }

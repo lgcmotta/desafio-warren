@@ -41,6 +41,8 @@ export const Transfer: React.FC = () => {
     
     const { id, currencySymbol } = useSelector(state => state.user)
 
+    if(!id) return <></>
+
     const handleTransfer = () => {
         const numberValue = parseFloat(transferValue);
 

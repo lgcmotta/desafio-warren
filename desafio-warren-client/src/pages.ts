@@ -1,4 +1,5 @@
 export const Pages = {
     Login: '/',
-    Home: '/home'
+    Home: '/home',
+    Callback: '/callback'
 }

@@ -1,11 +1,22 @@
+import React, { useCallback } from 'react';
 import { Button, Typography } from '@material-ui/core';
-import { authenticationProvider } from 'api/authentication/authenticationProvider';
-import React from 'react';
-import AzureAD from 'react-aad-msal';
 import { BackgroundDiv, LoginButtonDiv, LoginDiv,LoginTitleDiv } from './login.style';
+import { useMsal } from '@azure/msal-react';
+import { azureConfiguration } from 'api/authentication';
 
 export const Login: React.FC = () => {
     const imageUrl = `${process.env.PUBLIC_URL}/bg.svg`;
+
+    const { instance } = useMsal();
+
+    const handleLogin = useCallback(() => {
+        try{
+            instance.loginRedirect({ scopes: [azureConfiguration.getMSALScopes()]});
+        } catch(error){
+            console.log(error);
+        }
+
+    }, [instance])
 
     return <BackgroundDiv style={{ backgroundImage: `url(${imageUrl})` }}>
 
@@ -19,11 +30,9 @@ export const Login: React.FC = () => {
                 <Typography variant="h3" style={{ fontFamily: 'Roboto', fontWeight: 200 }}>
                     Welcome!
                 </Typography>
-                <AzureAD provider={authenticationProvider} forceLogin={false}>
-                    {({ login }) => <Button variant="contained" color="primary" fullWidth onClick={login}>
-                        Login
-                    </Button>}
-                </AzureAD>
+                <Button variant="contained" color="primary" fullWidth onClick={handleLogin}>
+                    Login
+                </Button>
             </LoginButtonDiv>
         </LoginDiv>
     </BackgroundDiv>

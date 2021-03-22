@@ -1,26 +1,22 @@
 import React, { Suspense } from 'react';
-import { BrowserRouter as Router, HashRouter } from 'react-router-dom';
-import { AuthenticationState, AzureAD } from 'react-aad-msal';
-import { authenticationProvider } from '../../api/authentication/authenticationProvider';
+import { BrowserRouter as Router } from 'react-router-dom';
 import PublicRoutes from './routes.public';
 import PrivateRoutes from './routes.private';
+import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal } from '@azure/msal-react';
 
 export const Routes: React.FC = () => {
-    return <Router>
+    const {inProgress} = useMsal();
 
-        <Suspense fallback={<div />}>
-            <AzureAD provider={authenticationProvider} forceLogin={false}>
-                {({ authenticationState }) => {
-                    switch (authenticationState) {
-                        case AuthenticationState.Authenticated:
-                            return (
-                                <PrivateRoutes />
-                            );
-                        default:
-                            return <PublicRoutes />;
-                    }
-                }}
-            </AzureAD>
-        </Suspense>
-    </Router>
+    return inProgress !== 'none' ? ( <div/> ) : (
+        <Router>
+            <Suspense fallback={<div />}>
+                <AuthenticatedTemplate>
+                    <PrivateRoutes />
+                </AuthenticatedTemplate>
+                <UnauthenticatedTemplate>
+                    <PublicRoutes />;
+                </UnauthenticatedTemplate>
+            </Suspense>
+        </Router>
+    );
 }
