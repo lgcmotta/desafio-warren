@@ -42,7 +42,7 @@ export const TransactionsTable: React.FC = () => {
         }
     })
 
-    const format = currency === 'USD' ? 'MM-DD-YYYY hh:mm:ss' : 'DD/MM/YYYY hh:mm:ss';
+    const format = currency === 'USD' ? 'MM-DD-YYYY HH:mm:ss' : 'DD/MM/YYYY HH:mm:ss';
 
     const columns:any[] = [
         {title: 'Transaction Identifier', field: 'id', cellStyle: {
