@@ -30,7 +30,7 @@ const SignalRHubComponent: React.FC = () => {
             if (hubConnection.connectionId)
                 hubConnection.send('AppendAccountToList', id.toString(), hubConnection.connectionId);
         } 
-    }, [id])
+    }, [id, dispatch])
 
     return (
         <></>

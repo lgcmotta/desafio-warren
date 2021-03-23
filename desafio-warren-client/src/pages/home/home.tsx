@@ -33,7 +33,7 @@ export const Home: React.FC = () => {
 
             setIsAuthenticating(false);
         })
-    }, [])
+    })
 
     return !isAuthenticating || inProgress !== 'none' ? (
         <HomeDiv>

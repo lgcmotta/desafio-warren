@@ -23,7 +23,7 @@ export const TransactionsTable: React.FC = () => {
         }
         getAccountTransactions();
 
-    }, [])
+    }, [id]);
 
     const data = transactions.map(transaction => {
         return {

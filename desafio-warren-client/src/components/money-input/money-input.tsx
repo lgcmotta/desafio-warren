@@ -21,10 +21,6 @@ export interface INumberFormatCustomProps {
     name: string;
 }
 
-interface INumberFortmatState {
-    numberformat: string;
-}
-
 function NumberFormatCustom(props: INumberFormatCustomProps) {
     const { inputRef, onChange, ...other } = props;
     const { currencySymbol } = useSelector(state => state.user);

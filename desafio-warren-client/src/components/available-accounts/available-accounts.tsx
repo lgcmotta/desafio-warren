@@ -31,7 +31,7 @@ export const AvailableAccounts:React.FC<IAvailableAccounts> = (props:IAvailableA
 
         getAvailableAccounts().then(availableAccounts => setAccounts(availableAccounts));
 
-    },[])
+    },[id])
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         onSelectedAccountChange((event.target as HTMLInputElement).value);

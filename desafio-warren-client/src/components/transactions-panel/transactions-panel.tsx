@@ -4,7 +4,7 @@ import Transfer from '../transfer';
 import Payment from '../payment';
 import Withdraw from '../withdraw';
 import TransactionsTable from '../transactions-table';
-import { AppBar, Tabs, Tab,  makeStyles, Theme, Box } from '@material-ui/core';
+import { AppBar, Tabs, Tab,  makeStyles, Theme } from '@material-ui/core';
 import { TransactionsPanelDiv } from './transactions-panel.styles';
 import { Deposit } from '../deposit/deposit';
 

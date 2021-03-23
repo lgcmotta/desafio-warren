@@ -30,7 +30,7 @@ export const AccountPanel: React.FC = () => {
             dispatch({type: AppActionType.UserAcquired, payload: response.payload });
         };
         getAccount();
-    },[])
+    },[dispatch])
 
    const { user } = state;
 
