@@ -1,18 +1,18 @@
 import { IAccount } from "models/account";
 
-export enum HomeActionType {
+export enum AppActionType {
     UserAcquired = 'UserAcquired',
     AccountBalanceChanged = 'AccountBalanceChanged'
 }
 
 export interface ISetUserAccountInfo {
-    type: HomeActionType.UserAcquired;
+    type: AppActionType.UserAcquired;
     payload: IAccount;
 }
 
 export interface IAccountBalanceChanged{
-    type: HomeActionType.AccountBalanceChanged,
+    type: AppActionType.AccountBalanceChanged,
     payload: string;
 }
 
-export type HomeActionTypes = ISetUserAccountInfo | IAccountBalanceChanged;
+export type AppActionTypes = ISetUserAccountInfo | IAccountBalanceChanged;

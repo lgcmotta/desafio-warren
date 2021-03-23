@@ -1,8 +1,8 @@
 import React from 'react';
 import NumberFormat from 'react-number-format';
-import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import { useSelector } from 'pages/home/home.provider';
+import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
+import { useSelector } from 'app/app.context';
 
 
 const useStyles = makeStyles((theme: Theme) =>

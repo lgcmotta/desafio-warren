@@ -2,22 +2,22 @@ import { getAsync } from 'api';
 import React, { useEffect } from 'react';
 import { AccountNameDiv, AccountPanelDiv, BalanceDiv } from './account-panel.styles';
 import { IAccount } from 'models/account';
-import { useHomeContext } from '../home.provider';
-import { HomeActionType } from '../home.actions';
 import { Paper, Typography } from '@material-ui/core';
+import { useAppContext } from 'app/app.context';
+import { AppActionType } from 'app/app.actions';
 
 export const AccountPanel: React.FC = () => {
-    const { state, dispatch } = useHomeContext();
+    const { state, dispatch } = useAppContext();
     
     useEffect(() => {
         async function getAccount(){
             const response = await getAsync<IAccount>('/api/v1/accounts/myself');
-            dispatch({type: HomeActionType.UserAcquired, payload: response.payload });
+            dispatch({type: AppActionType.UserAcquired, payload: response.payload });
         };
         getAccount();
     },[])
 
-   const {user} = state;
+   const { user } = state;
 
     if(!user) return <></>
 

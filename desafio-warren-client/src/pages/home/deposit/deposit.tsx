@@ -3,12 +3,10 @@ import { Theme, makeStyles } from '@material-ui/core/styles';
 import { Button, Paper, Typography } from '@material-ui/core';
 import { DepositButtonDiv, DepositDiv, DepositMoneyInputDiv, DepositTyphographyDiv } from './deposit.styles';
 import MoneyInput from '../common/money-input';
-import { useSelector } from '../home.provider';
 import { ITransactionResponse } from 'models/transaction';
 import { postAsync } from 'api';
 import Notification from '../common/notification';
-
-
+import { useSelector } from 'app/app.context';
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
@@ -63,7 +61,8 @@ export const Deposit: React.FC = () => {
 
     }
 
-    return <DepositDiv>
+    return (
+        <DepositDiv>
             <Paper className={classes.root}>
                 <DepositTyphographyDiv>
                     <Typography variant='h5'>How much do you want to deposit?</Typography>
@@ -77,4 +76,5 @@ export const Deposit: React.FC = () => {
             </Paper>'
             <Notification show={show} setShow={setShow} message={message} severity={severity}/>
         </DepositDiv>
+    );
 }

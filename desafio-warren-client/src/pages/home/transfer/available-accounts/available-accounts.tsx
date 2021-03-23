@@ -6,7 +6,8 @@ import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import { IAccountBase } from 'models/account';
 import { getAsync } from 'api';
-import { useSelector } from 'pages/home/home.provider';
+import { useSelector } from 'app/app.context';
+
 
 interface IAvailableAccounts{
     onSelectedAccountChange: (accountNumber: string) => void;
@@ -18,7 +19,7 @@ export const AvailableAccounts:React.FC<IAvailableAccounts> = (props:IAvailableA
   
     const { onSelectedAccountChange, accountNumber} = props;
     
-    const {id} = useSelector(state => state.user);
+    const { id } = useSelector(state => state.user);
 
     const [accounts, setAccounts] = useState<IAccountBase[]>([]);
 

@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
+import MoneyInput from '../common/money-input';
+import AvailableAccounts from './available-accounts';
+import Notification from '../common/notification';
 import { Theme, makeStyles } from '@material-ui/core/styles';
 import { Button, Paper, Typography } from '@material-ui/core';
 import { TransferButtonDiv, TransferDiv, TransferMoneyInputDiv, TransferTyphographyDiv } from './transfer.styles';
-import MoneyInput from '../common/money-input';
-import { useSelector } from '../home.provider';
 import { ITransactionResponse } from 'models/transaction';
 import { putAsync } from 'api';
-import AvailableAccounts from './available-accounts';
-import Notification from '../common/notification';
+import { useSelector } from 'app/app.context';
 
 
 const useStyles = makeStyles((theme: Theme) => ({

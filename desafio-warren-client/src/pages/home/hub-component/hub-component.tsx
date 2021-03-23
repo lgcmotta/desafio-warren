@@ -1,13 +1,13 @@
 import React, { memo, useEffect } from 'react';
 import { createHubConnection } from '../../../api/hub/hub-provider';
-import { useHomeContext } from '../home.provider';
 import { Guid } from 'guid-typescript';
-import { HomeActionType } from '../home.actions';
-import { useSelector } from 'pages/home/home.provider';
+import { useAppContext, useSelector } from 'app/app.context';
+import { AppActionType } from 'app/app.actions';
+
 
 const SignalRHubComponent: React.FC = () => {
     
-    const { dispatch} = useHomeContext();
+    const { dispatch} = useAppContext();
 
     const {id} = useSelector(state => state.user);
     
@@ -17,7 +17,7 @@ const SignalRHubComponent: React.FC = () => {
         const hubConnection = createHubConnection();
 
         hubConnection.on('AccountBalanceChanged', (accountBalance) => {
-            dispatch({type: HomeActionType.AccountBalanceChanged, payload: accountBalance });
+            dispatch({type: AppActionType.AccountBalanceChanged, payload: accountBalance });
         })
 
         hubConnection.start().then(a => {

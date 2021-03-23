@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { Theme, makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import { Button, Paper, Typography } from '@material-ui/core';
+import { Button, Paper, TextField, Typography } from '@material-ui/core';
 import { PaymentButtonDiv, PaymentDiv, PaymentMoneyInputDiv, PaymentTyphographyDiv, PaymentInvoiceNumberDiv } from './payments.styles';
 import MoneyInput from '../common/money-input';
-import { useSelector } from '../home.provider';
 import { ITransactionResponse } from 'models/transaction';
 import { putAsync } from 'api';
 import Notification from '../common/notification';
+import { useSelector } from 'app/app.context';
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {

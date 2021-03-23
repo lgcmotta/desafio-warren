@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import MaterialTable from 'material-table';
-import { TransactionsTableDiv } from './transactions-table.styles';
-import { useSelector } from '../home.provider';
-import { ITransaction } from 'models/transaction';
-import { getAsync } from 'api';
 import DateComponent from '../common/date-component';
 import AccountDetails from './account-details';
+import { TransactionsTableDiv } from './transactions-table.styles';
+import { ITransaction } from 'models/transaction';
+import { getAsync } from 'api';
+import { useSelector } from 'app/app.context';
 
 
 export const TransactionsTable: React.FC = () => {

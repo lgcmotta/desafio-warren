@@ -1,12 +1,12 @@
+import React, { useEffect, useState } from 'react';
+import AccountPanel from './account-panel';
+import HubComponent from './hub-component';
+import TopBar from './topbar';
 import { useAccount, useMsal } from '@azure/msal-react';
 import { api } from 'api/api';
 import { azureConfiguration } from 'api/authentication';
-import React, { useEffect, useState } from 'react';
-import AccountPanel from './account-panel';
-import { HomeProvider } from './home.provider';
-import HubComponent from './hub-component';
-import TopBar from './topbar';
 import { TransactionsPanel } from './transactions-panel/transactions-panel';
+import { HomeDiv } from './home.styles';
 
 
 export const Home: React.FC = () => {
@@ -36,12 +36,12 @@ export const Home: React.FC = () => {
     }, [])
 
     return !isAuthenticating || inProgress !== 'none' ? (
-        <HomeProvider>
+        <HomeDiv>
             <TopBar />
             <AccountPanel/>
             <TransactionsPanel />
             <HubComponent />
-        </HomeProvider>
+        </HomeDiv>
     ) : (
         <div/>
     );
