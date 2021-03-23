@@ -1,4 +1,4 @@
-import { Guid } from "guid-typescript";
+import { Guid } from 'guid-typescript';
 
 interface ITransactionResponse {
     status: string;

@@ -1,8 +1,9 @@
 import React, { useCallback } from 'react';
-import { Button, Typography } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import { BackgroundDiv, LoginButtonDiv, LoginDiv,LoginTitleDiv } from './login.style';
 import { useMsal } from '@azure/msal-react';
 import { azureConfiguration } from 'api/authentication';
+import TextComponent from 'components/text-component';
 
 export const Login: React.FC = () => {
     const imageUrl = `${process.env.PUBLIC_URL}/bg.svg`;
@@ -22,16 +23,12 @@ export const Login: React.FC = () => {
         <BackgroundDiv style={{ backgroundImage: `url(${imageUrl})` }}>
             <LoginDiv>
                 <LoginTitleDiv>
-                    <Typography variant="h1" style={{ fontFamily: 'Roboto', fontWeight: 100 }}>
-                        Motta Bank
-                    </Typography>
+                    <TextComponent variant='h1' text='Motta Bank'/>
                 </LoginTitleDiv>
                 <LoginButtonDiv>
-                    <Typography variant="h3" style={{ fontFamily: 'Roboto', fontWeight: 200 }}>
-                        Welcome!
-                    </Typography>
-                    <Button variant="contained" color="primary" fullWidth onClick={handleLogin}>
-                        Login
+                    <TextComponent variant='h3' text='Welcome!'/>
+                    <Button variant='contained' color='primary' fullWidth onClick={handleLogin}>
+                        <TextComponent variant={undefined} text='Login'/>
                     </Button>
                 </LoginButtonDiv>
             </LoginDiv>

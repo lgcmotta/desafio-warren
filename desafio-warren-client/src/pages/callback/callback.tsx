@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
-import { useHistory } from "react-router-dom";
-import { useAccount, useMsal } from "@azure/msal-react";
+import React, { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useAccount, useMsal } from '@azure/msal-react';
 import { api } from 'api/api';
-import { azureConfiguration } from "api/authentication";
+import { azureConfiguration } from 'api/authentication';
 
 export const Callback: React.FC = () => {
     const { instance, accounts } = useMsal();

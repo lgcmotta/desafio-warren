@@ -1,4 +1,4 @@
-import { IAccount } from "models/account";
+import { IAccount } from 'models/account';
 
 export enum AppActionType {
     UserAcquired = 'UserAcquired',

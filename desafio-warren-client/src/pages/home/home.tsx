@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import AccountPanel from './account-panel';
-import HubComponent from './hub-component';
-import TopBar from './topbar';
+import AccountPanel from '../../components/account-panel';
+import ApplicationBar from 'components/app-bar';
+import TransactionsPanel from 'components/transactions-panel';
+import HubComponent from 'components/hub-component';
 import { useAccount, useMsal } from '@azure/msal-react';
 import { api } from 'api/api';
 import { azureConfiguration } from 'api/authentication';
-import { TransactionsPanel } from './transactions-panel/transactions-panel';
 import { HomeDiv } from './home.styles';
 
 
@@ -37,7 +37,7 @@ export const Home: React.FC = () => {
 
     return !isAuthenticating || inProgress !== 'none' ? (
         <HomeDiv>
-            <TopBar />
+            <ApplicationBar />
             <AccountPanel/>
             <TransactionsPanel />
             <HubComponent />

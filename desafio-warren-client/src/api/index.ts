@@ -1,4 +1,4 @@
-import { api } from "./api";
+import { api } from './api';
 
 export async function getAsync<TResponse>(route: string): Promise<Response<TResponse>> {
     const response = await api.get<Response<TResponse>>(route);

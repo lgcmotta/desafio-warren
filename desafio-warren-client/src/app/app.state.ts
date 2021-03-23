@@ -1,5 +1,5 @@
-import { IAccount } from "models/account";
-import { ITransaction } from "models/transaction";
+import { IAccount } from 'models/account';
+import { ITransaction } from 'models/transaction';
 
 export interface IAppState{
     user: IAccount;
