@@ -40,12 +40,18 @@ namespace DesafioWarren.Api
             services.AddMicrosoftIdentityWebApiAuthentication(Configuration);
 
             services.AddSignalR();
-
+            
             services
                 .AddHttpContextAccessor()
                 .ConfigureSerilog(Configuration)
                 .AddAutoMapperFromAssemblies(ApplicationAssembly)
                 .AddAccountsDbContext(Configuration)
+                .AddStackExchangeRedisCache(options =>
+                {
+                    options.Configuration = Configuration.GetConnectionString("Redis");
+
+                    options.InstanceName = nameof(DesafioWarren);
+                })
                 .AddQuartzJobs()
                 .AddQuartzHostedService(quartz => quartz.WaitForJobsToComplete = true)
                 .ConfigureCors()

@@ -26,3 +26,8 @@ services:
       - MYSQL_ROOT_PASSWORD=aDm1nStR0nGP@ssW0rD
     volumes:
         - mysqldata:/var/lib/mysql
+  
+  redis:
+    command: redis-server --requirepass RedisPassword
+    ports:
+     - "6379:6379"

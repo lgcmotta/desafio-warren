@@ -13,6 +13,7 @@
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="5.0.1" />
     <PackageReference Include="Polly" Version="7.2.1" />
     <PackageReference Include="Quartz" Version="3.2.4" />
     <PackageReference Include="Quartz.Extensions.DependencyInjection" Version="3.2.4" />

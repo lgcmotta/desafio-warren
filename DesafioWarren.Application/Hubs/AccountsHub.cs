@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Threading.Tasks;
+using DesafioWarren.Application.Services.Cache;
 using Microsoft.AspNetCore.SignalR;
 
 namespace DesafioWarren.Application.Hubs
 {
     public class AccountsHub : Hub
     {
-        private readonly IConnectedAccountsManager _connectedAccountsManager;
+        private readonly ICachedConnectedAccountsManager _accountsManager;
 
-        public AccountsHub(IConnectedAccountsManager connectedAccountsManager)
+        public AccountsHub(ICachedConnectedAccountsManager accountsManager)
         {
-            _connectedAccountsManager = connectedAccountsManager;
+            _accountsManager = accountsManager;
         }
 
         public override async Task OnConnectedAsync()
@@ -20,14 +21,12 @@ namespace DesafioWarren.Application.Hubs
 
         public override async Task OnDisconnectedAsync(Exception exception)
         {
-            _connectedAccountsManager.RemoveAccountId(Context.ConnectionId);
-
             await base.OnDisconnectedAsync(exception);
         }
         
         public Task AppendAccountToList(Guid accountId, string connectionId)
         {
-            _connectedAccountsManager.AppendAccountId(accountId, Context.ConnectionId);
+            _accountsManager.AppendAccountId(accountId, connectionId);
 
             return Task.CompletedTask;
         }

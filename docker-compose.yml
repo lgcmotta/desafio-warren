@@ -9,10 +9,15 @@ services:
       dockerfile: DesafioWarren.Api/Dockerfile
     depends_on:
       - mysql
+      - redis
 
   mysql:
     image: mysql:latest
     container_name: mysql
+
+  redis:
+    image: redis
+    container_name: redis
 
 volumes:
   mysqldata:
