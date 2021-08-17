@@ -21,7 +21,6 @@ namespace DesafioWarren.Application.Autofac
 
         protected override void Load(ContainerBuilder builder)
         {
-            
             builder.RegisterMediatR(_assemblies);
 
             builder.RegisterGeneric(typeof(LoggingBehaviour<,>)).As(typeof(IPipelineBehavior<,>));
