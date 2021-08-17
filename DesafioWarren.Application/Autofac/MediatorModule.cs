@@ -1,9 +1,6 @@
-﻿using System;
-using System.Linq;
-using System.Reflection;
+﻿using System.Reflection;
 using Autofac;
 using DesafioWarren.Application.Behaviours;
-using FluentValidation;
 using MediatR;
 using MediatR.Extensions.Autofac.DependencyInjection;
 using Module = Autofac.Module;
