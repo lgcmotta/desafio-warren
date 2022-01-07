@@ -19,7 +19,7 @@ namespace DesafioWarren.Infrastructure.EntityFramework.DbContexts
 
             var connectionString = configuration.GetConnectionString(nameof(AccountsDbContext));
 
-            var dbContextOptionsBuilder = new DbContextOptionsBuilder<AccountsDbContext>().UseMySql(connectionString);
+            var dbContextOptionsBuilder = new DbContextOptionsBuilder<AccountsDbContext>().UseMySql(connectionString, ServerVersion.Parse("8.0.27"));
 
             return new AccountsDbContext(dbContextOptionsBuilder.Options, new FakeMediator());
         }

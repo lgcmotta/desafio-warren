@@ -30,10 +30,9 @@ namespace DesafioWarren.Infrastructure.EntityFramework
 
             serviceCollection.AddDbContext<AccountsDbContext>(options =>
             {
-                options.UseMySql(connectionString, mysqlOptions =>
+                options.UseMySql(connectionString, ServerVersion.Parse("8.0.27"), mysqlOptions =>
                 {
                     mysqlOptions.EnableRetryOnFailure(10, TimeSpan.FromSeconds(30), null);
-
                 });
             });
 
